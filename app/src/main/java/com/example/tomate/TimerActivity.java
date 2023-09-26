@@ -1,7 +1,14 @@
 package com.example.tomate;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,22 +19,50 @@ import com.example.tomate.databinding.ActivityTimerBinding;
 
 
 public class TimerActivity extends AppCompatActivity {
-    private ActivityTimerBinding timerBinding;
-    private TimerFragment timerFragment;
-    private RestFragment restFragment;
-    private TextView exitButton;
-
+    private Dialog exitDialog;
+    BackgroundFragment backgroundFragment;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
+        com.example.tomate.databinding.ActivityTimerBinding timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(timerBinding.getRoot());
-
+        backgroundFragment = new BackgroundFragment();
 //        makeRestFragment();
-//        makeTimerFragment();
+        makeTimerFragment();
 
-        exitButton = findViewById(R.id.activity_timer_exit_tv);
+        exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
+        exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        exitDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        exitDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
+        exitDialog.setContentView(R.layout.dialog_exit);             // xml 레이아웃 파일과 연결
+
+        TextView exitButton = findViewById(R.id.activity_timer_exit_tv);
         exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // execute
+                addBackgroundFragment();
+                showExitDialog();
+            }
+        });
+    }
+
+    private void showExitDialog(){
+        exitDialog.show();
+        exitDialog.setCancelable(false);
+        ImageView noBtn = exitDialog.findViewById(R.id.dialog_exit_no_iv);
+        ImageView yesBtn = exitDialog.findViewById(R.id.dialog_exit_yes_iv);
+        noBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitDialog.dismiss(); // 다이얼로그 닫기
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.remove(backgroundFragment);
+                transaction.commit();
+            }
+        });
+        yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // execute
@@ -35,10 +70,18 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
+    private void addBackgroundFragment() {
+        FragmentTransaction transaction;
+        transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.add(R.id.activity_timer_main_frm, backgroundFragment);
+        transaction.commit();
+    }
+
     private void makeRestFragment() {
         FragmentTransaction transaction;
         transaction = getSupportFragmentManager().beginTransaction();
-        restFragment = new RestFragment();
+        RestFragment restFragment = new RestFragment();
 
         transaction.replace(R.id.activity_timer_main_frm, restFragment);
         transaction.commit();
@@ -47,7 +90,7 @@ public class TimerActivity extends AppCompatActivity {
     private void makeTimerFragment() {
         FragmentTransaction transaction;
         transaction = getSupportFragmentManager().beginTransaction();
-        timerFragment = new TimerFragment();
+        TimerFragment timerFragment = new TimerFragment();
 
         transaction.replace(R.id.activity_timer_main_frm, timerFragment);
         transaction.commit();
