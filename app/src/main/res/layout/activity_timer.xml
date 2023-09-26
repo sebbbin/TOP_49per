@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/activity_timer_main_frm"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_grid">
 
     <ImageView
+        android:id="@+id/activity_timer_bin_iv"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/bin_icon"
@@ -13,5 +16,32 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="14dp"
         android:layout_marginRight="14dp"/>
+
+    <TextView
+        android:id="@+id/activity_timer_bin_tv"
+        android:fontFamily="@font/default_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/activity_timer_bin_iv"
+        app:layout_constraintBottom_toBottomOf="@id/activity_timer_bin_iv"
+        app:layout_constraintRight_toRightOf="@id/activity_timer_bin_iv"
+        app:layout_constraintLeft_toLeftOf="@id/activity_timer_bin_iv"
+        android:layout_marginTop="5dp"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/activity_timer_exit_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="30dp"
+        android:text="exit"
+        android:fontFamily="@font/default_regular"
+        android:textColor="@color/black"
+        android:textSize="24sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Tomate"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".TimerActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -26,6 +26,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
