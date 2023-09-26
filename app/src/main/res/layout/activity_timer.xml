@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/activity_timer_bin_tv"
+        android:fontFamily="@font/default_regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/activity_timer_bin_iv"
@@ -39,6 +40,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="30dp"
         android:text="exit"
+        android:fontFamily="@font/default_regular"
         android:textColor="@color/black"
         android:textSize="24sp"/>
 

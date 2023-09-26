@@ -1,4 +1,4 @@
-package com.example.tomate.ui;
+package com.example.tomate;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,13 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.tomate.R;
-import com.example.tomate.TimerActivity;
+import org.jetbrains.annotations.Nullable;
 
-public class TimerFragment extends Fragment {
+public class RestFragment extends Fragment {
     private TimerActivity timerActivity;
     private ViewGroup rootView;
 
@@ -26,7 +24,7 @@ public class TimerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_timer, container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_rest, container, false);
         return rootView;
     }
 }

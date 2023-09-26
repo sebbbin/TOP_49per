@@ -4,11 +4,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <TextView
         android:id="@+id/fragment_timer_tomato_iv"
         android:layout_width="250dp"
         android:layout_height="245dp"
-        android:src="@drawable/tomato_3d"
+        android:text="I'm in the rest..."
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingTop="70dp"
+        android:gravity="center_horizontal"
+        android:fontFamily="@font/default_regular"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,7 +23,7 @@
         android:id="@+id/fragment_timer_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
+        android:text="25:57"
         android:fontFamily="@font/default_bold"
         android:textSize="50sp"
         android:textColor="@color/black"
