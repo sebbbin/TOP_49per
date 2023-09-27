@@ -59,16 +59,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="50dp"
-    >
-    <ImageButton
-        android:id="@+id/kakaoLoginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/kakao_login_medium_wide"
-        android:layout_marginBottom="90dp"
-        android:contentDescription="Kakao Login Button"
-        android:background="@null"
-        android:padding="20dp" />
+        >
+        <ImageButton
+            android:id="@+id/kakaoLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/kakao_login_medium_wide"
+            android:layout_marginBottom="90dp"
+            android:contentDescription="Kakao Login Button"
+            android:background="@null"
+            android:padding="20dp" />
 
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>
