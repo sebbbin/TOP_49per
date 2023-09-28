@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/Ranking"
+        android:fontFamily="@font/default_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+       android:layout_marginLeft="20dp"
+        android:layout_gravity="center"
+        android:paddingRight="15dp"
+        android:textSize="40dp"
+        android:text="1."/>
+    <GridLayout
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:rowCount="2"
+        android:columnCount="5"
+
+        >
+        <ImageView
+            android:id="@+id/tierImageID"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_width="24dp"
+            android:layout_height="30dp"
+            android:layout_rowSpan="1"
+            android:layout_columnSpan="1"
+            android:src="@drawable/tomato_master"
+            />
+
+        <TextView
+            android:id="@+id/tier"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:paddingLeft="5dp"
+            android:layout_gravity="center"
+            android:textSize="12dp"
+            android:text="토마토 마스터"
+            android:textColor="#A2A288"
+            android:fontFamily="@font/default_bold"
+
+            />
+        <TextView
+            android:id="@+id/userName"
+            android:layout_column="0"
+            android:layout_row="1"
+
+
+            android:textSize="15dp"
+            android:text="황에르메스"
+            android:layout_columnSpan="5"
+
+            android:fontFamily="@font/default_bold"
+
+            />
+
+    </GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingRight="30dp"
+        android:gravity="right"
+        >
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ranking_tomato"
+            android:paddingRight="5dp"
+            />
+        <TextView
+            android:id="@+id/Tomato"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="33개"
+            android:fontFamily="@font/default_bold"
+            />
+
+    </LinearLayout>
+</LinearLayout>
