@@ -66,6 +66,8 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // execute
+                // Fragment 생성
+
             }
         });
     }
