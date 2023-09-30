@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tomate.databinding.ActivityTimerBinding;
+
+import java.util.logging.Handler;
 
 
 public class TimerActivity extends AppCompatActivity {
@@ -46,6 +50,25 @@ public class TimerActivity extends AppCompatActivity {
                 showExitDialog();
             }
         });
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                int second = 0;
+//                int minute = 0;
+//                while (true) {
+//                    // 코드 작성
+//                    second++;
+//                    minute = second / 60;
+//                    Log.d("time", String.format("%d", second));
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }).start();
     }
 
     private void showExitDialog(){
@@ -98,3 +121,4 @@ public class TimerActivity extends AppCompatActivity {
         transaction.commit();
     }
 }
+
