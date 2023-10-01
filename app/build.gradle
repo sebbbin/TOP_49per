@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services' version '4.3.15' apply false
 }
 
 android {
@@ -33,7 +32,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-database:20.2.2'
     modules {
         module("org.jetbrains.kotlin:kotlin-stdlib-jdk7") {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk7 is now part of kotlin-stdlib")
@@ -41,8 +39,6 @@ dependencies {
         module("org.jetbrains.kotlin:kotlin-stdlib-jdk8") {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
-        implementation platform('com.google.firebase:firebase-bom:32.3.1')
-        implementation 'com.google.firebase:firebase-analytics'
     }
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
