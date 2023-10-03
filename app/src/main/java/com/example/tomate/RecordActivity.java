@@ -3,6 +3,9 @@ package com.example.tomate;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -66,5 +69,15 @@ public class RecordActivity extends AppCompatActivity {
 
         lineChart.invalidate(); // 차트 업데이트
 
+        Button backbtn = (Button)findViewById(R.id.backbtn);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "뒤로가기 버튼 클릭", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
+
 }
