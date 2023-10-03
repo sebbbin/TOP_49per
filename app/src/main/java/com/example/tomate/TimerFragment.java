@@ -20,6 +20,9 @@ import org.w3c.dom.Text;
 public class TimerFragment extends Fragment {
     private TimerActivity timerActivity;
     private ViewGroup rootView;
+    //second랑 minute 임의로 빼놨음..!!
+    private int second = 0;
+    private int minute = 0;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -32,12 +35,19 @@ public class TimerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_timer, container, false);
 
+        return rootView;
+    }
+    //공부시간조정에 쓰일 메서드..내가 임의로 추가햇는데 지워도됨
+    public void setTime(int setMinute, int setSecond) {
+        this.minute = setMinute;
+        this.second = setSecond + setMinute * 60;
+    }
+    public void startTimer(){
         TextView timerTv = rootView.findViewById(R.id.fragment_timer_time_tv);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int second = 0;
-                int minute = 0;
+
                 while (true) {
                     // 코드 작성
                     second++;
@@ -60,6 +70,6 @@ public class TimerFragment extends Fragment {
                 }
             }
         }).start();
-        return rootView;
+
     }
 }
