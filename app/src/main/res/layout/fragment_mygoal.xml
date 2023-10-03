@@ -37,7 +37,7 @@
         android:layout_height="50dp"
         android:fontFamily="@font/default_bold"
         android:gravity="center_horizontal"
-        android:text="토마토 개수는 뽀모도로 공부법에 의거하여 측정됩니다.                          ex) 순 공부시간 100분 기준 1개, 1일 최대 14개"
+        android:text="토마토 개수는 뽀모도로 공부법에 의거하여 측정됩니다."
         android:textAlignment="gravity"
         android:textColor="#878181"
         android:textSize="12sp"
@@ -51,7 +51,6 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/goal"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:src="@drawable/tomato_3d" />
@@ -59,14 +58,25 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/mygoal_text3"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="270dp"
         android:layout_below="@+id/mygoal_text2"
-        android:gravity="center"
-        android:text="       개"
-        android:textStyle="bold"
+        android:gravity="center_horizontal|top"
+        android:text="              "
         android:textColor="#FFFFFF"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:paddingTop="140dp"/>
 
+    <NumberPicker
+        android:id="@+id/mygoal_np"
+        android:layout_width="90dp"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:layout_centerInParent="true"
+        android:layout_alignBottom="@+id/mygoal_text3"
+        />
 
 </RelativeLayout>
