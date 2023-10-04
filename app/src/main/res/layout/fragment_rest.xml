@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/fragment_timer_tomato_iv"
+        android:id="@+id/fragment_rest_tomato_iv"
         android:layout_width="250dp"
         android:layout_height="245dp"
         android:text="I'm in the rest..."
@@ -20,16 +20,16 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
-        android:id="@+id/fragment_timer_time_tv"
+        android:id="@+id/fragment_rest_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="25:57"
         android:fontFamily="@font/default_bold"
         android:textSize="50sp"
         android:textColor="@color/black"
-        app:layout_constraintRight_toRightOf="@id/fragment_timer_tomato_iv"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_timer_tomato_iv"
-        app:layout_constraintBottom_toTopOf="@id/fragment_timer_tomato_iv"
+        app:layout_constraintRight_toRightOf="@id/fragment_rest_tomato_iv"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_rest_tomato_iv"
+        app:layout_constraintBottom_toTopOf="@id/fragment_rest_tomato_iv"
         android:layout_marginBottom="-25dp"/>
 
 

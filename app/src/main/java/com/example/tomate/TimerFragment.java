@@ -21,8 +21,13 @@ public class TimerFragment extends Fragment {
     private TimerActivity timerActivity;
     private ViewGroup rootView;
     //second랑 minute 임의로 빼놨음..!!
-    private int second = 0;
-    private int minute = 0;
+    private int second;
+    private int minute;
+
+    public TimerFragment(int timer_minute, int timer_second) {
+        second = timer_second + (timer_minute * 60);
+        minute = 0;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -30,11 +35,30 @@ public class TimerFragment extends Fragment {
         timerActivity = (TimerActivity) getActivity();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("resume", "on");
+        this.startTimer();
+    }
+
+    //    @Override
+//    public void onStart() {
+//        super.onStart();
+//        if (timerActivity != null) {
+//            second = timerActivity.timer_second;
+//            minute = timerActivity.timer_minute;
+//        }
+//    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_timer, container, false);
-
+//        if (timerActivity != null) {
+//            second = timerActivity.timer_second;
+//            minute = timerActivity.timer_minute;
+//        }
         return rootView;
     }
     //공부시간조정에 쓰일 메서드..내가 임의로 추가햇는데 지워도됨
@@ -47,18 +71,18 @@ public class TimerFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                int tmpMinute = minute;
+                int tmpSecond = second;
+                while (tmpSecond >= 0) {
+                    tmpMinute = tmpSecond / 60;
+                    Log.d("time", String.format("%d", tmpSecond));
 
-                while (true) {
-                    // 코드 작성
-                    second++;
-                    minute = second / 60;
-                    Log.d("time", String.format("%d", second));
-                    int finalMinute = minute;
-                    int finalSecond = second;
+                    int finalTmpSecond = tmpSecond;
+                    int finalTmpMinute = tmpMinute;
                     timerActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            timerTv.setText(String.format("%02d:%02d", finalMinute, finalSecond % 60));
+                            timerTv.setText(String.format("%02d:%02d", finalTmpMinute, finalTmpSecond % 60));
                         }
                     });
 
@@ -67,9 +91,20 @@ public class TimerFragment extends Fragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if (tmpSecond == 0) {
+                        // 토마토 개수 올라가는 기능
+                        TextView tomato_cnt_tv = timerActivity.findViewById(R.id.activity_timer_bin_tv);
+                        timerActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tomato_cnt_tv.setText(String.format("%d", Integer.parseInt(tomato_cnt_tv.getText().toString()) + 1));
+                            }
+                        });
+                        timerActivity.makeRestFragment();
+                    }
+                    tmpSecond--;
                 }
             }
         }).start();
-
     }
 }
