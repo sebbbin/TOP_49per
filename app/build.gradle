@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.kakao.sdk:v2-user:2.10.0'
     modules {
         module("org.jetbrains.kotlin:kotlin-stdlib-jdk7") {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk7 is now part of kotlin-stdlib")
@@ -39,6 +41,7 @@ dependencies {
         module("org.jetbrains.kotlin:kotlin-stdlib-jdk8") {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
+        implementation 'com.kakao.sdk:v2-user:2.10.0'
     }
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.4.0'

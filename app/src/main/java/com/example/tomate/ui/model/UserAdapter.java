@@ -37,8 +37,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         User user = userList.get(position);
         holder.userName.setText(user.getUserName());
         holder.tier.setText(user.getTier());
-        holder.Tomato.setText(String.valueOf(user.getTomato()));
+        holder.Tomato.setText(String.valueOf(user.getTomato())+"개");
         holder.tierImageID.setImageResource(user.getTierImageID());
+        holder.Ranking.setText(String.valueOf(userList.indexOf(user)+1)+".");
     }
 
     @Override
@@ -51,12 +52,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public TextView Tomato;
         public ImageView tierImageID;
 
+        public TextView Ranking;
+
         public UserViewHolder(View view) {
             super(view);
             userName = view.findViewById(R.id.userName);
             tier = view.findViewById(R.id.tier);
             Tomato = view.findViewById(R.id.Tomato);
             tierImageID = view.findViewById(R.id.tierImageID);
+            Ranking = view.findViewById(R.id.Ranking);
         }
     }
 
