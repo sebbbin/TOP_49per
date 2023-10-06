@@ -4,18 +4,19 @@
 
     <item
         android:id="@+id/navigation_record"
-        android:icon="@drawable/record_button"
-
-        android:title="기록" />
+        android:icon="@drawable/navigation_record"
+        android:title="record"/>
+        android:icon="@drawable/record_button" />
 
     <item
         android:id="@+id/navigation_timer"
         android:icon="@drawable/tomato_3d"
-        android:title="타이머" />
+        android:title="@null"
+        />
 
     <item
         android:id="@+id/navigation_ranking"
-        android:icon="@drawable/rank_button"
-        android:title="랭킹" />
+        android:icon="@drawable/navigation_ranking"
+        android:title="ranking" />
 
 </menu>
