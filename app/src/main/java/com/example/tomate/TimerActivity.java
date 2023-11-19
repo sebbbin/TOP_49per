@@ -4,6 +4,7 @@ import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE;
 import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -104,6 +105,13 @@ public class TimerActivity extends AppCompatActivity {
         secondsPicker.setMinValue(0);
         secondsPicker.setMaxValue(59);
 
+        SharedPreferences preferences = getSharedPreferences("timeControl", MODE_PRIVATE);
+        int hour = preferences.getInt("hour", 0);
+        int minute = preferences.getInt("minute", 0);
+        int second = preferences.getInt("second", 0);
+        hourPicker.setValue(hour);
+        minutePicker.setValue(minute);
+        secondsPicker.setValue(second);
 
         TimerFragment timerFragment = new TimerFragment(0, -1);
         FragmentTransaction transaction;
@@ -136,6 +144,13 @@ public class TimerActivity extends AppCompatActivity {
                 int selectedHour = hourPicker.getValue();
                 int selectedMinute = minutePicker.getValue();
                 int selectedSeconds = secondsPicker.getValue();
+
+                SharedPreferences preferences = getSharedPreferences("timeControl", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("hour", selectedHour);
+                editor.putInt("minute", selectedMinute);
+                editor.putInt("second", selectedSeconds);
+                editor.commit();
 
                 // TimerFragment의 시간 설정
                 //TimerFragment timerFragment = (TimerFragment) getSupportFragmentManager().findFragmentById(R.id.activity_timer_main_frm);
