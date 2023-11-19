@@ -26,9 +26,12 @@ public class Mygoal extends AppCompatActivity{
 
         NumberPicker npker = findViewById(R.id.mygoal_np);
 
-        npker.setMaxValue(10);
-        npker.setMinValue(1);
-        npker.setValue(1);
+        String[] numbers = {"1개", "2개", "3개", "4개", "5개", "6개", "7개", "8개", "9개", "10개"};
+
+        npker.setMinValue(0);
+        npker.setMaxValue(numbers.length - 1);
+        npker.setValue(0);
+        npker.setDisplayedValues(numbers);
 
         npker.setWrapSelectorWheel(false);
 

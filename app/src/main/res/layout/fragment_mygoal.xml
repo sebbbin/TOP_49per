@@ -60,12 +60,12 @@
     <TextView
         android:id="@+id/mygoal_text3"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="255dp"
         android:layout_below="@+id/mygoal_text2"
         android:gravity="center_horizontal|top"
-        android:text="              "
+        android:text="                           개   "
         android:textColor="#FFFFFF"
-        android:textSize="40sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:paddingTop="140dp"/>
 
@@ -78,5 +78,8 @@
         android:layout_centerInParent="true"
         android:layout_alignBottom="@+id/mygoal_text3"
         />
+
+
+
 
 </RelativeLayout>
