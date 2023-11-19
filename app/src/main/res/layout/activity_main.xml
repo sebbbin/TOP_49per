@@ -7,18 +7,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#fff"
+        android:background="#00000000"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_nav_menu"/>
+        app:menu="@menu/bottom_nav_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+
+        />
+
+    <ImageButton
+        android:id="@+id/timer_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@id/bottom_navi"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="네비게이션바 타이머 버튼 용도">
+    </ImageButton>
+
 </RelativeLayout>

@@ -8,15 +8,14 @@
     <fragment
         android:id="@+id/navigation_record"
         android:label="record"
-        android:name="com.example.tomate.MypageFragment"
-        tools:layout="@layout/fragment_mypage" />
+        android:name="com.example.tomate.StudyrecordFragment"
+        tools:layout="@layout/fragment_studyrecord" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_mygoal"-->
-<!--        android:label="record"-->
-<!--        android:name="com.example.tomate.Mygoal"-->
-<!--        tools:layout="@layout/fragment_studyrecord" />-->
-
+    <fragment
+        android:id="@+id/navigation_fake"
+        android:label="fake"
+        android:name="com.example.tomate.RestFragment"
+        tools:layout="@layout/fragment_studyrecord" />
 
     <fragment
         android:id="@+id/navigation_ranking"

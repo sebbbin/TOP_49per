@@ -5,7 +5,12 @@
     <item
         android:id="@+id/navigation_record"
         android:icon="@drawable/navigation_record"
-        android:title="record"/>
+        android:title="record" />
+
+    <item
+        android:id="@+id/navigation_fake"
+        android:icon="@drawable/tomato_3d"
+        android:title="fake" />
 
     <item
         android:id="@+id/navigation_ranking"
