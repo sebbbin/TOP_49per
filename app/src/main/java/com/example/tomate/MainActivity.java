@@ -1,10 +1,13 @@
 package com.example.tomate;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,15 +27,23 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_record, R.id.navigation_timer, R.id.navigation_ranking)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MypageFragment()).commit();
+
+        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_record:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new RestFragment()).commit();
+                        break;
+                    case R.id.navigation_ranking:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new RankingFragment()).commit();
+                        break;
+                }
+                return;
+            }
+        });
     }
 
 }

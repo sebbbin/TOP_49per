@@ -22,7 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tomate.databinding.ActivityTimerBinding;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Timer;
 import java.util.logging.Handler;
 
 
@@ -39,6 +45,10 @@ public class TimerActivity extends AppCompatActivity {
         com.example.tomate.databinding.ActivityTimerBinding timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(timerBinding.getRoot());
         backgroundFragment = new BackgroundFragment();
+
+        // firebase test code
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("message").push().setValue("2");
 
         exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
         exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
