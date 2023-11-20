@@ -29,6 +29,16 @@ public class TimerFragment extends Fragment {
         minute = 0;
     }
 
+    public static int convertToSeconds(String time) {
+        if (time == null || !time.matches("\\d{2}:\\d{2}")) {
+            throw new IllegalArgumentException("Invalid time format");
+        }
+        String[] parts = time.split(":");
+        int minutes = Integer.parseInt(parts[0]);
+        int seconds = Integer.parseInt(parts[1]);
+        return minutes * 60 + seconds;
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -40,6 +50,16 @@ public class TimerFragment extends Fragment {
         super.onResume();
         Log.d("resume", "on");
         this.startTimer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // second - current second
+        TextView timerTv = rootView.findViewById(R.id.fragment_timer_time_tv);
+        int current_second =  convertToSeconds((String) timerTv.getText());
+        timerActivity.seconds.add(second - current_second);
+        Log.d("second - current_second", String.valueOf(second - current_second));
     }
 
     //    @Override
@@ -102,6 +122,8 @@ public class TimerFragment extends Fragment {
                         });
                         timerActivity.makeRestFragment();
                     }
+                    timerActivity.total_study_time++;
+                    timerActivity.pure_study_time++;
                     tmpSecond--;
                 }
             }

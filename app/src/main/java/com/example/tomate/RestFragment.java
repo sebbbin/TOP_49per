@@ -59,6 +59,7 @@ public class RestFragment extends Fragment {
                         // 토마토 개수 올라가는 기능
                         timerActivity.makeTimerFragment();
                     }
+                    timerActivity.total_study_time++;
                     second--;
                 }
             }
