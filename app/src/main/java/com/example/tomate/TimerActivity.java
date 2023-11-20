@@ -50,15 +50,23 @@ public class TimerActivity extends AppCompatActivity {
     public List<Integer> seconds = new ArrayList<>();
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalDate now = LocalDate.now();
+        TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
+        String tomato_cnt = (String) tomato_cnt_tv.getText();
+        Record record = new Record(now, total_study_time, pure_study_time, tomato_cnt, seconds);
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("Record").push().setValue(record);
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         com.example.tomate.databinding.ActivityTimerBinding timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(timerBinding.getRoot());
         backgroundFragment = new BackgroundFragment();
-
-        // firebase test code
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        mDatabase.child("message").push().setValue("2");
 
         exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
         exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -78,25 +86,6 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         showTimeControlDialog();
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                int second = 0;
-//                int minute = 0;
-//                while (true) {
-//                    // 코드 작성
-//                    second++;
-//                    minute = second / 60;
-//                    Log.d("time", String.format("%d", second));
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
     }
     private void showTimeControlDialog(){
         timeControlDialog  = new Dialog(TimerActivity.this);
@@ -195,19 +184,6 @@ public class TimerActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                LocalDate now = LocalDate.now();
-                TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
-                String tomato_cnt = (String) tomato_cnt_tv.getText();
-
-//                List<Object> record = new ArrayList<>();
-//                record.add(now.toString());
-//                record.add(String.format("%02d:%02d:%02d", total_study_time / 3600, (total_study_time % 3600) / 60, total_study_time % 60));
-//                record.add(String.format("%02d:%02d:%02d", pure_study_time / 3600, (pure_study_time % 3600) / 60, pure_study_time % 60));
-//                record.add(tomato_cnt);
-                Record record = new Record(now, total_study_time, pure_study_time, tomato_cnt, seconds);
-
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("Record").push().setValue(record);
                 finish();
             }
         });

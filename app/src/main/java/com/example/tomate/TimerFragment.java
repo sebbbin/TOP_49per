@@ -53,8 +53,8 @@ public class TimerFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         // second - current second
         TextView timerTv = rootView.findViewById(R.id.fragment_timer_time_tv);
         int current_second =  convertToSeconds((String) timerTv.getText());
