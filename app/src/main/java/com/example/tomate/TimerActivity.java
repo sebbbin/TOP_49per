@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -29,6 +31,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.logging.Handler;
 
@@ -39,6 +45,9 @@ public class TimerActivity extends AppCompatActivity {
     BackgroundFragment backgroundFragment;
     public int timer_second = 0;
     public int timer_minute = 0;
+    public int total_study_time = 0;
+    public int pure_study_time = 0;
+    public List<Integer> seconds = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +57,8 @@ public class TimerActivity extends AppCompatActivity {
         backgroundFragment = new BackgroundFragment();
 
         // firebase test code
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("message").push().setValue("2");
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.child("message").push().setValue("2");
 
         exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
         exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -183,14 +192,23 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
         yesBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                // execute
-                // Fragment 생성
+                LocalDate now = LocalDate.now();
+                TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
+                String tomato_cnt = (String) tomato_cnt_tv.getText();
 
+//                List<Object> record = new ArrayList<>();
+//                record.add(now.toString());
+//                record.add(String.format("%02d:%02d:%02d", total_study_time / 3600, (total_study_time % 3600) / 60, total_study_time % 60));
+//                record.add(String.format("%02d:%02d:%02d", pure_study_time / 3600, (pure_study_time % 3600) / 60, pure_study_time % 60));
+//                record.add(tomato_cnt);
+                Record record = new Record(now, total_study_time, pure_study_time, tomato_cnt, seconds);
 
-
-
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("Record").push().setValue(record);
+                finish();
             }
         });
     }
