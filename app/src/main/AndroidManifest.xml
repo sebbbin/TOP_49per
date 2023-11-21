@@ -5,18 +5,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Tomate"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         tools:targetApi="31"
         android:name=".KakaoApplication">
         <activity
-            android:name=".MainActivity"
+            android:name=".TimerActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -31,7 +31,7 @@
                 android:value="98e113d9908358266ecb973dd3790031"
                 />
         </activity>
-        <activity android:name=".TimerActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
