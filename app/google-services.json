@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "739292003157",
+    "firebase_url": "https://tomate-a3ebc-default-rtdb.firebaseio.com",
+    "project_id": "tomate-a3ebc",
+    "storage_bucket": "tomate-a3ebc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739292003157:android:27cc2b473c1dfef1cb8ddc",
+        "android_client_info": {
+          "package_name": "com.example.tomate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnlkobZpCGD2rKe6uZOtlzCItxLMXDxv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/fragment_rest_tomato_iv"
+        android:layout_width="250dp"
+        android:layout_height="245dp"
+        android:text="I'm in the rest..."
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingTop="70dp"
+        android:gravity="center_horizontal"
+        android:fontFamily="@font/default_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/fragment_rest_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25:57"
+        android:fontFamily="@font/default_bold"
+        android:textSize="50sp"
+        android:textColor="@color/black"
+        app:layout_constraintRight_toRightOf="@id/fragment_rest_tomato_iv"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_rest_tomato_iv"
+        app:layout_constraintBottom_toTopOf="@id/fragment_rest_tomato_iv"
+        android:layout_marginBottom="-25dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
