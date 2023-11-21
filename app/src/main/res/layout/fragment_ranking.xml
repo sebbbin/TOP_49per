@@ -87,10 +87,11 @@
                     android:src="@drawable/gold_medal"
                     />
                 <TextView
+                    android:id="@+id/topOneName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="황에르메스"
+                    android:text=""
                     android:fontFamily="@font/default_bold"
                     />
 
@@ -109,10 +110,11 @@
                         android:paddingRight="5dp"
                         />
                     <TextView
+                        android:id="@+id/topOneTomato"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="38개"
+                        android:text=""
                         android:fontFamily="@font/default_bold"
                         />
 
@@ -135,10 +137,11 @@
 
                     />
                 <TextView
+                    android:id="@+id/topTwoName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="세빈챤"
+                    android:text=""
                     android:fontFamily="@font/default_bold"
                     />
 
@@ -156,10 +159,11 @@
                         android:paddingRight="5dp"
                         />
                     <TextView
+                        android:id="@+id/topTwoTomato"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="38개"
+                        android:text=""
                         android:fontFamily="@font/default_bold"
                         />
 
@@ -181,10 +185,11 @@
                     android:src="@drawable/bronze_medal"
                     />
                 <TextView
+                    android:id="@+id/topThreeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="미니미"
+                    android:text=""
                     android:fontFamily="@font/default_bold"
                     />
 
@@ -202,10 +207,11 @@
                         android:paddingRight="5dp"
                         />
                     <TextView
+                        android:id="@+id/topThreeTomato"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="33개"
+                        android:text=""
                         android:fontFamily="@font/default_bold"
                         />
 

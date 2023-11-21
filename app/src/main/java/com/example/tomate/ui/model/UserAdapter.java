@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.Tomato.setText(String.valueOf(user.getTomato())+"개");
         holder.tierImageID.setImageResource(user.getTierImageID());
         holder.Ranking.setText(String.valueOf(userList.indexOf(user)+1)+".");
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_in_slide);
+        holder.itemView.startAnimation(animation);
     }
 
     @Override
