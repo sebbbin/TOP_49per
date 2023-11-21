@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:gravity="center"
             >
@@ -70,7 +70,7 @@
             android:gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_height="270dp">
+            android:layout_height="240dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -81,6 +81,7 @@
                 >
 
                 <ImageView
+                    android:id="@+id/goldMedal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/gold_medal"
@@ -101,6 +102,7 @@
                     android:gravity="center"
                     >
                     <ImageView
+
                         android:layout_width="25dp"
                         android:layout_height="match_parent"
                         android:src="@drawable/ranking_tomato"
@@ -126,6 +128,7 @@
                 android:orientation="vertical"
                 >
                 <ImageView
+                    android:id="@+id/silverMedal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/silver_medal"
@@ -172,6 +175,7 @@
 
                 >
                 <ImageView
+                    android:id="@+id/bronzeMedal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/bronze_medal"

@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +25,21 @@ public class RankingFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
+
         userRecyclerView = view.findViewById(R.id.RankingList); //랭킹리스트 리사이클러뷰 참조 가져오기
+        userAdapter = new UserAdapter(getContext(),userList);
+        userRecyclerView.setAdapter(userAdapter);
+        userRecyclerView.setLayoutManager(new LinearLayoutManager((getContext())));
+
+        ImageView goldMedal = view.findViewById(R.id.goldMedal);
+        Animation animation1 = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_slide);
+        goldMedal.startAnimation(animation1);
+        ImageView silverMedal = view.findViewById(R.id.silverMedal);
+        Animation animation2 = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_slide);
+        silverMedal.startAnimation(animation2);
+        ImageView bronzeMedal = view.findViewById(R.id.bronzeMedal);
+        Animation animation3 = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_slide);
+        bronzeMedal.startAnimation(animation3);
 
         User user1 = new User("황에르메스");
         user1.setTier("토마토마스터");
@@ -50,13 +67,6 @@ public class RankingFragment extends Fragment {
         user5.setTierImageID(R.drawable.seed);
         userList.add(user5);
 
-
-
-
-        userAdapter = new UserAdapter(getContext(),userList);
-        userRecyclerView.setAdapter(userAdapter);
-
-        userRecyclerView.setLayoutManager(new LinearLayoutManager((getContext())));
         return view;
 
     }
