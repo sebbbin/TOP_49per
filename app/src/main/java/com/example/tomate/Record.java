@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Record {
+    private String userId;
     private String date;
     private String total_study_time;
     private String pure_study_time;
@@ -15,7 +16,8 @@ public class Record {
     }
 
     // 매개변수가 있는 생성자
-    public Record(LocalDate now, int total_study_time, int pure_study_time, String tomato_cnt, List<Integer> seconds) {
+    public Record(String userId, LocalDate now, int total_study_time, int pure_study_time, String tomato_cnt, List<Integer> seconds) {
+        this.userId = userId;
         this.date = now.toString();
         this.total_study_time = String.format("%02d:%02d:%02d", total_study_time / 3600, (total_study_time % 3600) / 60, total_study_time % 60);
         this.pure_study_time = String.format("%02d:%02d:%02d", pure_study_time / 3600, (pure_study_time % 3600) / 60, pure_study_time % 60);
@@ -24,6 +26,14 @@ public class Record {
     }
 
     // 게터와 세터 메소드
+    public String getUserId() {
+        return date;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getDate() {
         return date;
     }
