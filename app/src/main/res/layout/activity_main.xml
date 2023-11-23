@@ -20,9 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:background="#00000000"
         app:labelVisibilityMode="unlabeled"
         android:layout_below="@id/main_frame"
+        android:background="@drawable/background_transparent"
         android:padding="0dp"
         app:menu="@menu/bottom_nav_menu"
         android:elevation="0dp">
