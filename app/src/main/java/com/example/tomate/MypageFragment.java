@@ -56,7 +56,7 @@ public class MypageFragment extends Fragment {
                 userNameTv.setText(userName);
                 if (tierTv.equals("토마토마스터")) {
                     ImageView tierIv = rootView.findViewById(R.id.fragment_mypage_tear_iv);
-                    tierIv.setImageDrawable(R.drawable.tomato_master);
+                    tierIv.setImageResource(R.drawable.tomato_master);
                 }
             }
 
