@@ -22,15 +22,13 @@
         app:layout_constraintStart_toEndOf="@id/fragment_mypage_profile_iv"
         android:layout_marginTop="9dp"
         android:layout_marginStart="15dp"
-        android:src="@mipmap/ic_launcher"
         />
     
     <TextView
-        android:id="@+id/fragment_mypage_nickname_tv"
+        android:id="@+id/fragment_mypage_tier_tv"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:gravity="center_horizontal"
-        android:text="토마토마스터"
         app:layout_constraintStart_toEndOf="@id/fragment_mypage_tear_iv"
         app:layout_constraintTop_toTopOf="@id/fragment_mypage_tear_iv"
         app:layout_constraintBottom_toBottomOf="@id/fragment_mypage_tear_iv"
@@ -39,11 +37,10 @@
         android:layout_marginStart="10dp"
         android:fontFamily="@font/default_bold"/>
     <TextView
-        android:id="@+id/fragment_mypage_category_tv"
+        android:id="@+id/fragment_mypage_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
         android:gravity="center_horizontal"
-        android:text="대학생"
         app:layout_constraintStart_toStartOf="@id/fragment_mypage_tear_iv"
         android:textSize="18sp"
         android:fontFamily="@font/default_regular"
