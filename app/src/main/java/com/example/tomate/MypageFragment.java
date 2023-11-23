@@ -40,7 +40,7 @@ public class MypageFragment extends Fragment {
 
     private void getUserData() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
-        DatabaseReference user1Ref = mDatabase.child("user1");
+        DatabaseReference user1Ref = mDatabase.child("user2");
 
         // 데이터를 읽기 위해 ValueEventListener 추가
         user1Ref.addValueEventListener(new ValueEventListener() {
@@ -54,9 +54,19 @@ public class MypageFragment extends Fragment {
                 tierTv.setText(tierStr);
                 TextView userNameTv = rootView.findViewById(R.id.fragment_mypage_name_tv);
                 userNameTv.setText(userName);
-                if (tierTv.equals("토마토마스터")) {
-                    ImageView tierIv = rootView.findViewById(R.id.fragment_mypage_tear_iv);
+                ImageView tierIv = rootView.findViewById(R.id.fragment_mypage_tear_iv);
+                if (tierStr.equals("토마토마스터")) {
                     tierIv.setImageResource(R.drawable.tomato_master);
+                } else if (tierStr.equals("방울토마토")) {
+                    tierIv.setImageResource(R.drawable.cherry_tomato);
+                } else if (tierStr.equals("토마토꽃")) {
+                    tierIv.setImageResource(R.drawable.tomato_flower);
+                } else if (tierStr.equals("본잎")) {
+                    tierIv.setImageResource(R.drawable.adult_leaf);
+                } else if (tierStr.equals("떡잎")) {
+                    tierIv.setImageResource(R.drawable.baby_leaf);
+                } else {
+                    tierIv.setImageResource(R.drawable.seed);
                 }
             }
 
