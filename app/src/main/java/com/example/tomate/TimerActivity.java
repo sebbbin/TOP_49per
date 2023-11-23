@@ -4,8 +4,10 @@ import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE;
 import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -28,6 +31,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.logging.Handler;
 
@@ -38,6 +45,21 @@ public class TimerActivity extends AppCompatActivity {
     BackgroundFragment backgroundFragment;
     public int timer_second = 0;
     public int timer_minute = 0;
+    public int total_study_time = 0;
+    public int pure_study_time = 0;
+    public List<Integer> seconds = new ArrayList<>();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalDate now = LocalDate.now();
+        TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
+        String tomato_cnt = (String) tomato_cnt_tv.getText();
+        Record record = new Record("tmpId", now, total_study_time, pure_study_time, tomato_cnt, seconds);
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("Record").push().setValue(record);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,10 +67,6 @@ public class TimerActivity extends AppCompatActivity {
         com.example.tomate.databinding.ActivityTimerBinding timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(timerBinding.getRoot());
         backgroundFragment = new BackgroundFragment();
-
-        // firebase test code
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("message").push().setValue("2");
 
         exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
         exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -68,25 +86,6 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         showTimeControlDialog();
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                int second = 0;
-//                int minute = 0;
-//                while (true) {
-//                    // 코드 작성
-//                    second++;
-//                    minute = second / 60;
-//                    Log.d("time", String.format("%d", second));
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
     }
     private void showTimeControlDialog(){
         timeControlDialog  = new Dialog(TimerActivity.this);
@@ -104,6 +103,13 @@ public class TimerActivity extends AppCompatActivity {
         secondsPicker.setMinValue(0);
         secondsPicker.setMaxValue(59);
 
+        SharedPreferences preferences = getSharedPreferences("timeControl", MODE_PRIVATE);
+        int hour = preferences.getInt("hour", 0);
+        int minute = preferences.getInt("minute", 0);
+        int second = preferences.getInt("second", 0);
+        hourPicker.setValue(hour);
+        minutePicker.setValue(minute);
+        secondsPicker.setValue(second);
 
         TimerFragment timerFragment = new TimerFragment(0, -1);
         FragmentTransaction transaction;
@@ -137,6 +143,13 @@ public class TimerActivity extends AppCompatActivity {
                 int selectedMinute = minutePicker.getValue();
                 int selectedSeconds = secondsPicker.getValue();
 
+                SharedPreferences preferences = getSharedPreferences("timeControl", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("hour", selectedHour);
+                editor.putInt("minute", selectedMinute);
+                editor.putInt("second", selectedSeconds);
+                editor.commit();
+
                 // TimerFragment의 시간 설정
                 //TimerFragment timerFragment = (TimerFragment) getSupportFragmentManager().findFragmentById(R.id.activity_timer_main_frm);
                 if (timerFragment != null) {
@@ -168,14 +181,10 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
         yesBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                // execute
-                // Fragment 생성
-
-
-
-
+                finish();
             }
         });
     }
