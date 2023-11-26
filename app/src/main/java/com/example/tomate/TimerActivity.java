@@ -55,10 +55,10 @@ public class TimerActivity extends AppCompatActivity {
         LocalDate now = LocalDate.now();
         TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
         String tomato_cnt = (String) tomato_cnt_tv.getText();
-        Record record = new Record("tmpId", now, total_study_time, pure_study_time, tomato_cnt, seconds);
+        RecordData record = new RecordData("tmpId", now, total_study_time, pure_study_time, tomato_cnt, seconds);
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("Record").push().setValue(record);
+        mDatabase.child("RecordData").push().setValue(record);
     }
 
     @Override

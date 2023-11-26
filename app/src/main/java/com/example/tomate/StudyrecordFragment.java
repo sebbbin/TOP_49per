@@ -11,8 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tomate.ui.model.RecordData;
-import com.example.tomate.ui.model.RecordDataAdapter;
+import com.example.tomate.ui.RecordAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
 public class StudyrecordFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private RecordDataAdapter adapter;
+    private RecordAdapter adapter;
     private List<RecordData> recordData = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class StudyrecordFragment extends Fragment {
 
 
         recyclerView = view.findViewById(R.id.Recordrecyclerview);
-        adapter = new RecordDataAdapter(getContext(), recordData);
+        //adapter = new RecordAdapter(getContext(), recordData);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
