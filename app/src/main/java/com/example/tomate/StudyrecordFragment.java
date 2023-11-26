@@ -21,10 +21,11 @@ public class StudyrecordFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecordDataAdapter adapter;
+    private List<RecordData> recordData = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studyrecord, container, false);
-        List<RecordData> recordData = new ArrayList<>();
+
 
         recyclerView = view.findViewById(R.id.Recordrecyclerview);
         adapter = new RecordDataAdapter(getContext(), recordData);
