@@ -2,6 +2,7 @@ package com.example.tomate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,7 @@ import kotlin.jvm.functions.Function2;
 public class KakaologinActivity extends AppCompatActivity {
 
     private static final String TAG = "KakaologinActivity";
-    private View loginButton, logoutButton;
+    private View loginButton, logoutButton, gotoMainButton;
     private TextView nickName;
     private ImageView profileImage;
 
@@ -30,9 +31,18 @@ public class KakaologinActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.login);
         logoutButton = findViewById(R.id.logout);
+        gotoMainButton = findViewById(R.id.gotoMain);
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
 
+        gotoMainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // MainActivity로 이동
+                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -93,15 +103,19 @@ public class KakaologinActivity extends AppCompatActivity {
 
                     loginButton.setVisibility(View.GONE);
                     logoutButton.setVisibility(View.VISIBLE);
+                    gotoMainButton.setVisibility(View.VISIBLE);
+
                 } else {
                     nickName.setText(null);
                     profileImage.setImageBitmap(null);
 
                     loginButton.setVisibility(View.VISIBLE);
                     logoutButton.setVisibility(View.GONE);
+                    gotoMainButton.setVisibility(View.GONE);
                 }
                 return null;
             }
         });
     }
 }
+
