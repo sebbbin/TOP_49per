@@ -34,14 +34,14 @@ public class KakaologinActivity extends AppCompatActivity {
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
 
-        gotoMainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // MainActivity로 이동
-                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        gotoMainButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // MainActivity로 이동
+//                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {

@@ -27,7 +27,7 @@ public class RecordData {
 
     // 게터와 세터 메소드
     public String getUserId() {
-        return date;
+        return userId;
     }
 
     public void setUserId(String userId) {
