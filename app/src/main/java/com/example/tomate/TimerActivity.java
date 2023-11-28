@@ -60,6 +60,9 @@ public class TimerActivity extends AppCompatActivity {
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("RecordData").push().setValue(record);
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("User");
+
     }
 
     @Override

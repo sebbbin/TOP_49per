@@ -7,8 +7,17 @@ public class User {
     private String userName; //유저이름
     private String tier; //티어 ex) 토마토 마스터
     private long Tomato; //토마토 소지 개수
-
+    private String totalStudyTime;
     private int tierImageID;// 티어 이미지 리소스
+
+    public String getTotalStudyTime() {
+        return totalStudyTime;
+    }
+
+    public void setTotalStudyTime(String totalStudyTime) {
+        this.totalStudyTime = totalStudyTime;
+    }
+
     public long getUserId() {
         return userId;
     }
