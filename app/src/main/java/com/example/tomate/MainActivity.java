@@ -3,6 +3,7 @@ package com.example.tomate;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    String userId;
+    public String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.child("User").child("user5").setValue(user5);
         mDatabase.child("User").child("user6").setValue(user6);
         mDatabase.child("User").child("user123").setValue(user123);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userId = getIntent().getStringExtra("userId");
@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (userId == null) {
+            userId = "6";
+        }
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MypageFragment()).commit();
 
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_record:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
                         break;
                     case R.id.navigation_ranking:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new RankingFragment()).commit();
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TimerActivity.class);
                 if (userId == null) {
-                    userId = "12345678";
+                    userId = "1";
                 }
                 intent.putExtra("userId", userId);
                 startActivity(intent);

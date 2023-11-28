@@ -26,8 +26,12 @@ public class StudyrecordFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecordAdapter recordAdapter;
     private DatabaseReference database;
-
+    String userId;
     private List<RecordData> recordData = new ArrayList<>();
+
+    public StudyrecordFragment(String userId) {
+        this.userId = userId;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studyrecord, container, false);

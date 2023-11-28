@@ -103,6 +103,17 @@ public class TimerActivity extends AppCompatActivity {
                                             Log.e("Update", "Failed to update totalStudyTime: " + e.getMessage());
                                         });
 
+
+                                long new_tomato_cnt = user.getTomato() + Long.parseLong(tomato_cnt);
+                                snapshot.getRef().child("tomato").setValue(new_tomato_cnt)
+                                        .addOnSuccessListener(aVoid -> {
+                                            // 업데이트 성공
+                                            Log.d("Update", "tomato_cnt successfully updated.");
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // 업데이트 실패
+                                            Log.e("Update", "Failed to update tomato_cnt: " + e.getMessage());
+                                        });
                                 break; // 첫 번째 일치하는 데이터만 사용
                             }
                         }
