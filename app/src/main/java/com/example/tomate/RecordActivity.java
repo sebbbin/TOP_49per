@@ -44,7 +44,7 @@ public class RecordActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = getIntent().getStringExtra("userId");
-
+        Log.d("Record", userId);
         textViewPureStudyTime = findViewById(R.id.textViewPureStudyTime);
 
         mDatabase.child("RecordData").orderByChild("userId").equalTo(userId)

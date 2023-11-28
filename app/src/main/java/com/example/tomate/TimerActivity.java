@@ -19,20 +19,29 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tomate.databinding.ActivityTimerBinding;
+import com.example.tomate.ui.model.User;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -61,8 +70,48 @@ public class TimerActivity extends AppCompatActivity {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("RecordData").push().setValue(record);
 
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("User");
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        // userId에 해당하는 user의 total_cnt를 조회
+        databaseRef.child("User").orderByChild("userId").equalTo(Long.parseLong(userId))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            User user = snapshot.getValue(User.class);
+                            if (user != null) {
+                                Log.d("user", user.getUserName());
+                                String time1 = String.format("%02d:%02d:%02d", total_study_time / 3600, (total_study_time % 3600) / 60, total_study_time % 60);
+                                String time2 = user.getTotalStudyTime();
+                                // LocalTime 객체로 변환
+                                LocalTime t1 = LocalTime.parse(time1);
+                                LocalTime t2 = LocalTime.parse(time2);
 
+                                // 두 시간의 차이를 Duration으로 계산
+                                Duration duration = Duration.between(LocalTime.MIN, t1).plus(Duration.between(LocalTime.MIN, t2));
+
+                                // 결과 시간 계산
+                                LocalTime totalTime = LocalTime.MIN.plus(duration);
+                                System.out.println("Total Time: " + totalTime.toString());
+
+                                snapshot.getRef().child("totalStudyTime").setValue(totalTime.toString())
+                                        .addOnSuccessListener(aVoid -> {
+                                            // 업데이트 성공
+                                            Log.d("Update", "totalStudyTime successfully updated.");
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // 업데이트 실패
+                                            Log.e("Update", "Failed to update totalStudyTime: " + e.getMessage());
+                                        });
+
+                                break; // 첫 번째 일치하는 데이터만 사용
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("onCancelled", "onCancelled");
+                    }
+                });
     }
 
     @Override

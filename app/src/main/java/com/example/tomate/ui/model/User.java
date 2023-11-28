@@ -10,6 +10,14 @@ public class User {
     private String totalStudyTime;
     private int tierImageID;// 티어 이미지 리소스
 
+    public User(long userId, String userName, String tier, long Tomato, String totalStudyTime, int tierImageID) {
+        setUserId(userId);
+        setUserName(userName);
+        setTier(tier);
+        setTotalStudyTime(totalStudyTime);
+        setTierImageID(tierImageID);
+    }
+
     public String getTotalStudyTime() {
         return totalStudyTime;
     }

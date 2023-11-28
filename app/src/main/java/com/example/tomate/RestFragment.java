@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 public class RestFragment extends Fragment {
     private TimerActivity timerActivity;
     private ViewGroup rootView;
-    private int second = 5 * 1;
+    private int second = 5 * 60;
     private int minute = 0;
 
     @Override
