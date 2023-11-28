@@ -97,7 +97,7 @@ public class KakaologinActivity extends AppCompatActivity {
                     nickName.setText(user.getKakaoAccount().getProfile().getNickname());
 
                     // Firebase Realtime Database에 사용자 정보 저장
-                    FirebaseDatabase.getInstance().getReference("users")
+                    FirebaseDatabase.getInstance().getReference("User")
                             .child(String.valueOf(user.getId()))
                             .setValue(user);
 
