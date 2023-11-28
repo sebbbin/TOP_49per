@@ -97,12 +97,12 @@ public class TimerActivity extends AppCompatActivity {
         timeControlDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         timeControlDialog.setContentView(R.layout.dialog_timecontrol);
         timeControlDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        NumberPicker hourPicker = timeControlDialog.findViewById(R.id.hourPicker);
+//        NumberPicker hourPicker = timeControlDialog.findViewById(R.id.hourPicker);
         NumberPicker minutePicker = timeControlDialog.findViewById(R.id.minutePicker);
         NumberPicker secondsPicker = timeControlDialog.findViewById(R.id.secondsPicker);
 
-        hourPicker.setMinValue(0);
-        hourPicker.setMaxValue(11);
+//        hourPicker.setMinValue(0);
+//        hourPicker.setMaxValue(0);
         minutePicker.setMinValue(0);
         minutePicker.setMaxValue(59);
         secondsPicker.setMinValue(0);
@@ -112,7 +112,7 @@ public class TimerActivity extends AppCompatActivity {
         int hour = preferences.getInt("hour", 0);
         int minute = preferences.getInt("minute", 0);
         int second = preferences.getInt("second", 0);
-        hourPicker.setValue(hour);
+//        hourPicker.setValue(hour);
         minutePicker.setValue(minute);
         secondsPicker.setValue(second);
 
@@ -144,13 +144,13 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 사용자가 선택한 시간으로 설정
-                int selectedHour = hourPicker.getValue();
+//                int selectedHour = hourPicker.getValue();
                 int selectedMinute = minutePicker.getValue();
                 int selectedSeconds = secondsPicker.getValue();
 
                 SharedPreferences preferences = getSharedPreferences("timeControl", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("hour", selectedHour);
+//                editor.putInt("hour", selectedHour);
                 editor.putInt("minute", selectedMinute);
                 editor.putInt("second", selectedSeconds);
                 editor.commit();
