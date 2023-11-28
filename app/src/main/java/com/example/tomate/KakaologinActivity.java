@@ -49,6 +49,7 @@ public class KakaologinActivity extends AppCompatActivity {
                 if (oAuthToken != null) {
                     updateKakaoLoginUi();
                 } else {
+                    Log.e(TAG, throwable.getMessage());
                     Log.e(TAG, "invoke: login fail");
                 }
                 return null;
