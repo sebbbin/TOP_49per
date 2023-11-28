@@ -14,6 +14,7 @@ public class User {
         setUserId(userId);
         setUserName(userName);
         setTier(tier);
+        setTomato(Tomato);
         setTotalStudyTime(totalStudyTime);
         setTierImageID(tierImageID);
     }
@@ -66,8 +67,8 @@ public class User {
         return Tomato;
     }
 
-    public void setTomato(long tomato) {
-        Tomato = tomato;
+    public void setTomato(long Tomato) {
+        this.Tomato = Tomato;
     }
 
     public User(){

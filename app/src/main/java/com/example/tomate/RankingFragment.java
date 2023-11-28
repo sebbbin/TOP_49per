@@ -65,7 +65,7 @@ public class RankingFragment extends Fragment {
         Animation animation3 = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in_slide);
         bronzeMedal.startAnimation(animation3);
 
-        databaseRef.orderByChild("Tomato").addValueEventListener(new ValueEventListener() {
+        databaseRef.orderByChild("tomato").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //userList.clear();
