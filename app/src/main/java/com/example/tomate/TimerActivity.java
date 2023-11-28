@@ -48,6 +48,7 @@ public class TimerActivity extends AppCompatActivity {
     public int total_study_time = 0;
     public int pure_study_time = 0;
     public List<Integer> seconds = new ArrayList<>();
+    private String userId;
 
     @Override
     protected void onDestroy() {
@@ -55,10 +56,10 @@ public class TimerActivity extends AppCompatActivity {
         LocalDate now = LocalDate.now();
         TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
         String tomato_cnt = (String) tomato_cnt_tv.getText();
-        Record record = new Record("tmpId", now, total_study_time, pure_study_time, tomato_cnt, seconds);
+        RecordData record = new RecordData(userId, now, total_study_time, pure_study_time, tomato_cnt, seconds);
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("Record").push().setValue(record);
+        mDatabase.child("RecordData").push().setValue(record);
     }
 
     @Override
@@ -67,6 +68,10 @@ public class TimerActivity extends AppCompatActivity {
         com.example.tomate.databinding.ActivityTimerBinding timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(timerBinding.getRoot());
         backgroundFragment = new BackgroundFragment();
+        userId = getIntent().getStringExtra("userId");
+        if (userId != null) {
+            Log.d("timerActivity userId", userId);
+        }
 
         exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
         exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -184,6 +189,7 @@ public class TimerActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+                exitDialog.dismiss();
                 finish();
             }
         });
