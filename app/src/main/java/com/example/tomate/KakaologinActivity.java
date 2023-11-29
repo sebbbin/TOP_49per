@@ -103,10 +103,7 @@ public class KakaologinActivity extends AppCompatActivity {
 
                     loginButton.setVisibility(View.GONE);
                     logoutButton.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-                    // Intent에 userId 추가
-                    intent.putExtra("userId", String.valueOf(user.getId()));
-                    startActivity(intent);
+
                 } else {
                     nickName.setText(null);
                     profileImage.setImageBitmap(null);
@@ -114,6 +111,10 @@ public class KakaologinActivity extends AppCompatActivity {
                     loginButton.setVisibility(View.VISIBLE);
                     logoutButton.setVisibility(View.GONE);
                 }
+                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                // Intent에 userId 추가
+                intent.putExtra("userId", String.valueOf(user.getId()));
+                startActivity(intent);
                 return null;
             }
         });
