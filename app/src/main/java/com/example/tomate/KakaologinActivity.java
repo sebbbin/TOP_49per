@@ -34,14 +34,6 @@ public class KakaologinActivity extends AppCompatActivity {
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
 
-//        gotoMainButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // MainActivity로 이동
-//                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -86,27 +78,21 @@ public class KakaologinActivity extends AppCompatActivity {
     private void updateKakaoLoginUi() {
         UserApiClient.getInstance().me(new Function2<User, Throwable, Unit>() {
             @Override
-            public Unit invoke(User user, Throwable throwable) {
-                if (user != null) {
-                    Log.d(TAG, "invoke: id = " + user.getId());
-                    Log.d(TAG, "invoke: email = " + user.getKakaoAccount().getEmail());
-                    Log.d(TAG, "invoke: nickname = " + user.getKakaoAccount().getProfile().getNickname());
-                    Log.d(TAG, "invoke: gender = " + user.getKakaoAccount().getGender());
-                    Log.d(TAG, "invoke: age = " + user.getKakaoAccount().getAgeRange());
-
-                    nickName.setText(user.getKakaoAccount().getProfile().getNickname());
-
-                    // Firebase Realtime Database에 사용자 정보 저장
-                    FirebaseDatabase.getInstance().getReference("User")
-                            .child(String.valueOf(user.getId()))
-                            .setValue(user);
+            public Unit invoke(User kakaoUser, Throwable throwable) {
+                if (kakaoUser != null) {
+                    // KakaoUser 정보를 바탕으로 앱의 User 객체 생성
+                    com.example.tomate.ui.model.User appUser = new com.example.tomate.ui.model.User(
+                            kakaoUser.getId(), // Kakao 로그인에서 얻은 userId
+                            kakaoUser.getKakaoAccount().getProfile().getNickname(), // 예를 들어 닉네임을 userName으로 설정
+                            "Default Tier", // 초기 티어 설정
+                            0, // 초기 토마토 소지 개수
+                            "00:00",
+                            R.drawable.tomato_3d// 초기 총 학습 시간
+                    );
 
                     loginButton.setVisibility(View.GONE);
                     logoutButton.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-                    // Intent에 userId 추가
-                    intent.putExtra("userId", String.valueOf(user.getId()));
-                    startActivity(intent);
+
                 } else {
                     nickName.setText(null);
                     profileImage.setImageBitmap(null);
@@ -114,6 +100,10 @@ public class KakaologinActivity extends AppCompatActivity {
                     loginButton.setVisibility(View.VISIBLE);
                     logoutButton.setVisibility(View.GONE);
                 }
+                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                // Intent에 userId 추가
+                intent.putExtra("userId", String.valueOf(kakaoUser.getId()));
+                startActivity(intent);
                 return null;
             }
         });
