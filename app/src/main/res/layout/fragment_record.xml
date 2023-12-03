@@ -136,6 +136,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="21dp"
+                android:id="@+id/textViewTomatoGoal"
                 />
 
             <ImageView

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
@@ -90,24 +91,27 @@ public class KakaologinActivity extends AppCompatActivity {
                             R.drawable.tomato_3d// 초기 총 학습 시간
                     );
 
+                    // 로그인 성공 시 MainActivity로 이동
+                    Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                    // Intent에 userId 추가
+                    intent.putExtra("userId", String.valueOf(kakaoUser.getId()));
+                    startActivity(intent);
+
+                    // UI 업데이트
                     loginButton.setVisibility(View.GONE);
                     logoutButton.setVisibility(View.VISIBLE);
+                    nickName.setText(appUser.getUserName()); // 사용자 이름으로 업데이트
+                    // 프로필 이미지 업데이트 작업 추가
 
                 } else {
-                    nickName.setText(null);
-                    profileImage.setImageBitmap(null);
-
+                    // 로그아웃 또는 로그인 실패 시 UI 업데이트
                     loginButton.setVisibility(View.VISIBLE);
                     logoutButton.setVisibility(View.GONE);
+                    nickName.setText(""); // 사용자 이름 초기화
+                    // 프로필 이미지 초기화 작업 추가
                 }
-                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-                // Intent에 userId 추가
-                intent.putExtra("userId", String.valueOf(kakaoUser.getId()));
-                startActivity(intent);
                 return null;
             }
         });
     }
 }
-
-
