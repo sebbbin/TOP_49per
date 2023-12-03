@@ -31,22 +31,22 @@
         android:layout_marginRight="40dp"
         >
 
-        <NumberPicker
-            android:id="@+id/hourPicker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:selectionDividerHeight="0dp"
-            android:descendantFocusability="blocksDescendants" />
+<!--        <NumberPicker-->
+<!--            android:id="@+id/hourPicker"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:selectionDividerHeight="0dp"-->
+<!--            android:descendantFocusability="blocksDescendants" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="시간"
-            android:gravity="center"
-            android:padding="10dp"
-            android:fontFamily="@font/default_regular"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="시간"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:fontFamily="@font/default_regular"-->
+<!--            />-->
 
         <NumberPicker
             android:id="@+id/minutePicker"

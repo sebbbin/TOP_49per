@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -25,11 +31,62 @@ public class RecordActivity extends AppCompatActivity {
     ArrayList<Entry> entry_chart1 = new ArrayList<>(); // 데이터를 담을 Arraylist
     ArrayList<String> xVals = new ArrayList<String>(); // 변환할 String 형태 x축 값
     LineDataSet lineDataSet1;
+    private TextView textViewPureStudyTime;
+    private TextView textViewTotalStudyTime;
+    private DatabaseReference mDatabase;
+    String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_record);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        userId = getIntent().getStringExtra("userId");
+        Log.d("Record", userId);
+        textViewPureStudyTime = findViewById(R.id.textViewPureStudyTime);
+
+        mDatabase.child("RecordData").orderByChild("userId").equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            RecordData recordData = snapshot.getValue(RecordData.class);
+                            if (recordData != null) {
+                                textViewPureStudyTime.setText(String.valueOf(recordData.getPure_study_time()));
+                                break; // 첫 번째 일치하는 데이터만 사용
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                    }
+                });
+
+        textViewTotalStudyTime = findViewById(R.id.textViewTotalStudyTime);
+        mDatabase.child("RecordData").orderByChild("userId").equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            RecordData recordData = snapshot.getValue(RecordData.class);
+                            if (recordData != null) {
+                                textViewTotalStudyTime.setText(String.valueOf(recordData.getTotal_study_time()));
+                                break; // 첫 번째 일치하는 데이터만 사용
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                    }
+                });
+
+
 
 
         lineChart = (LineChart) findViewById(R.id.chart);
