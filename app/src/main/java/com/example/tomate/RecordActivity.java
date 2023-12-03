@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
+
 public class RecordActivity extends AppCompatActivity {
     //선 그래프
     private LineChart lineChart;
@@ -35,7 +36,6 @@ public class RecordActivity extends AppCompatActivity {
     private TextView textViewTotalStudyTime;
     private DatabaseReference mDatabase;
     String userId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
