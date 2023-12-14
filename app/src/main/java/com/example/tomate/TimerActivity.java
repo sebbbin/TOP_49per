@@ -27,6 +27,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tomate.databinding.ActivityTimerBinding;
 import com.example.tomate.ui.model.User;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,11 +42,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +71,9 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (seconds.size() == 1 && seconds.get(0) == -1) {
+            return;
+        }
         LocalDate now = LocalDate.now();
         TextView tomato_cnt_tv = findViewById(R.id.activity_timer_bin_tv);
         String tomato_cnt = (String) tomato_cnt_tv.getText();
@@ -225,7 +237,7 @@ public class TimerActivity extends AppCompatActivity {
                     timer_minute = selectedMinute;
                     timer_second = selectedSeconds;
                     timerFragment.setTime(selectedMinute, selectedSeconds);
-                    if (selectedMinute == 0 && selectedMinute == 0) {
+                    if (timer_minute == 0 && timer_second == 0) {
                         timerFragment.setTime(25, 0);
                     }
                     timerFragment.startTimer(); // 타이머 시작
@@ -291,5 +303,29 @@ public class TimerActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private String getTodayDate() {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(date);
+        System.out.println("오늘 날짜: " + dateString);
+        return dateString;
+    }
+
+    public static String addTimes(String time1, String time2) {
+        // 시간 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        // 문자열을 LocalTime 객체로 파싱
+        LocalTime localTime1 = LocalTime.parse(time1, formatter);
+        LocalTime localTime2 = LocalTime.parse(time2, formatter);
+
+        // 두 시간을 합침
+        LocalTime combinedTime = localTime1.plusHours(localTime2.getHour())
+                .plusMinutes(localTime2.getMinute())
+                .plusSeconds(localTime2.getSecond());
+
+        // 합친 시간을 문자열로 변환
+        return combinedTime.format(formatter);
+    }
 }
 

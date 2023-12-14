@@ -119,6 +119,14 @@ public class StudyrecordFragment extends Fragment {
                                     // 업데이트된 값을 기존 데이터에 설정
                                     existingData.setPure_study_time(String.format("%02d:%02d:%02d", updatedPureHours, updatedPureMinutes, updatedPureSecs));
                                     existingData.setTotal_study_time(String.format("%02d:%02d:%02d", updatedTotalHours, updatedTotalMinutes, updatedTotalSecs));
+                                    existingData.setTomato_cnt(String.valueOf(Integer.parseInt(existingData.getTomato_cnt()) + Integer.parseInt(data.getTomato_cnt())));
+
+                                    List<Integer> a = existingData.getSeconds();
+                                    List<Integer> b = data.getSeconds();
+                                    List<Integer> mergedList = new ArrayList<>();
+                                    mergedList.addAll(a);
+                                    mergedList.addAll(b);
+                                    existingData.setSeconds(mergedList);
                                 }
                             }
                         }

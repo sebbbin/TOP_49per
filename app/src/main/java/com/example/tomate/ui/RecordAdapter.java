@@ -22,7 +22,7 @@ import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder> {
 
-    private List<RecordData> recordList;
+    private static List<RecordData> recordList;
 
     public RecordAdapter(List<RecordData> recordList) {
         this.recordList = recordList;
@@ -65,6 +65,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                     // 버튼 클릭 시 실행할 코드
                     Context context = v.getContext();
                     Intent intent = new Intent(context, RecordActivity.class);
+                    intent.putExtra("date", dateTextView.getText().toString());
+                    intent.putExtra("recordData", recordList.get(getAdapterPosition()));
                     context.startActivity(intent);
                 }
             });

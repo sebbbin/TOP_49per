@@ -1,9 +1,10 @@
 package com.example.tomate;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class RecordData {
+public class RecordData implements Serializable {
     private String userId;
     private String date;
     private String total_study_time;
@@ -22,6 +23,16 @@ public class RecordData {
         this.total_study_time = String.format("%02d:%02d:%02d", total_study_time / 3600, (total_study_time % 3600) / 60, total_study_time % 60);
         this.pure_study_time = String.format("%02d:%02d:%02d", pure_study_time / 3600, (pure_study_time % 3600) / 60, pure_study_time % 60);
         this.tomato_cnt = tomato_cnt;
+        this.seconds = seconds;
+    }
+
+    // 매개변수가 있는 생성자
+    public RecordData(String userId, LocalDate now, String total_study_time, String pure_study_time, Integer tomato_cnt, List<Integer> seconds) {
+        this.userId = userId;
+        this.date = now.toString();
+        this.total_study_time = total_study_time;
+        this.pure_study_time = pure_study_time;
+        this.tomato_cnt = String.valueOf(tomato_cnt);
         this.seconds = seconds;
     }
 

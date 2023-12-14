@@ -40,25 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        User user1 = new User(1, "이민희", "토마토마스터", 1523, "00:20:59", 0);
-//        User user2 = new User(2, "나세빈", "방울토마토", 123, "00:20:59", 1);
-//        User user3 = new User(3, "황서현", "토마토꽃", 53, "00:20:59", 2);
-//        User user4 = new User(4, "김민희", "본잎", 24, "00:20:59", 3);
-//        User user5 = new User(5, "박세빈", "떡잎", 12, "00:20:59", 4);
-//        User user6 = new User(6, "김지원", "씨앗", 3, "00:20:59", 5);
-//        User user123 = new User(12345678, "정지원", "토마토마스터", 3, "00:20:59", 0);
-//
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//        mDatabase.child("User").child("user1").setValue(user1);
-//        mDatabase.child("User").child("user2").setValue(user2);
-//        mDatabase.child("User").child("user3").setValue(user3);
-//        mDatabase.child("User").child("user4").setValue(user4);
-//        mDatabase.child("User").child("user5").setValue(user5);
-//        mDatabase.child("User").child("user6").setValue(user6);
-//        mDatabase.child("User").child("user123").setValue(user123);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userId = getIntent().getStringExtra("userId");
+
+        SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        userId = sharedPref.getString("userId", "");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
