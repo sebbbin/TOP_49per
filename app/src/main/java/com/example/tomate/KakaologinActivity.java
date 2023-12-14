@@ -1,17 +1,29 @@
 package com.example.tomate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
+
+import java.util.Collections;
+import java.util.Iterator;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -28,12 +40,11 @@ public class KakaologinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kakao_login);
-
         loginButton = findViewById(R.id.login);
         logoutButton = findViewById(R.id.logout);
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
-
+        KakaoSdk.init(this,"6b761aebb82413c0a8e1c6a44cb77377");
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -84,14 +95,48 @@ public class KakaologinActivity extends AppCompatActivity {
                     com.example.tomate.ui.model.User appUser = new com.example.tomate.ui.model.User(
                             kakaoUser.getId(), // Kakao 로그인에서 얻은 userId
                             kakaoUser.getKakaoAccount().getProfile().getNickname(), // 예를 들어 닉네임을 userName으로 설정
-                            "Default Tier", // 초기 티어 설정
+                            "씨앗", // 초기 티어 설정
                             0, // 초기 토마토 소지 개수
                             "00:00",
                             R.drawable.tomato_3d// 초기 총 학습 시간
                     );
 
-                    loginButton.setVisibility(View.GONE);
-                    logoutButton.setVisibility(View.VISIBLE);
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference usersRef = mDatabase.child("User");
+
+                    usersRef.child(String.valueOf(appUser.getUserId())).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // 존재하는 user -> shared preference에 넣기
+                                // SharedPreferences 객체를 가져옵니다. "MyPrefs"는 SharedPreferences 파일의 이름입니다.
+                                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                                // SharedPreferences.Editor 객체를 사용하여 데이터를 저장합니다.
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                String userId = String.valueOf(appUser.getUserId()); // 여기에 저장하고 싶은 String 값을 넣습니다.
+                                editor.putString("userId", userId);
+
+                                // 변경사항을 커밋합니다.
+                                editor.apply();
+                                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish(); // 현재 액티비티를 종료합니다.
+                            } else {
+                                // 만약 User가 새로운 유저면 추가한다.
+                                mDatabase.child("User").child(String.valueOf(appUser.getUserId())).setValue(appUser);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // 에러가 발생했을 때의 처리 로직
+                            System.out.println("Database error: " + databaseError.getCode());
+                        }
+                    });
+
+//                    loginButton.setVisibility(View.GONE);
+//                    logoutButton.setVisibility(View.VISIBLE);
 
                 } else {
                     nickName.setText(null);
@@ -100,10 +145,10 @@ public class KakaologinActivity extends AppCompatActivity {
                     loginButton.setVisibility(View.VISIBLE);
                     logoutButton.setVisibility(View.GONE);
                 }
-                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+//                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
                 // Intent에 userId 추가
-                intent.putExtra("userId", String.valueOf(kakaoUser.getId()));
-                startActivity(intent);
+//                intent.putExtra("userId", String.valueOf(kakaoUser.getId()));
+//                startActivity(intent);
                 return null;
             }
         });
