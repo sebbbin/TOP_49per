@@ -108,24 +108,24 @@ public class KakaologinActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                // 존재하는 user -> shared preference에 넣기
-                                // SharedPreferences 객체를 가져옵니다. "MyPrefs"는 SharedPreferences 파일의 이름입니다.
-                                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-                                // SharedPreferences.Editor 객체를 사용하여 데이터를 저장합니다.
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                String userId = String.valueOf(appUser.getUserId()); // 여기에 저장하고 싶은 String 값을 넣습니다.
-                                editor.putString("userId", userId);
-
-                                // 변경사항을 커밋합니다.
-                                editor.apply();
-                                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish(); // 현재 액티비티를 종료합니다.
                             } else {
                                 // 만약 User가 새로운 유저면 추가한다.
                                 mDatabase.child("User").child(String.valueOf(appUser.getUserId())).setValue(appUser);
                             }
+                            SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                            // SharedPreferences.Editor 객체를 사용하여 데이터를 저장합니다.
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            String userId = String.valueOf(appUser.getUserId()); // 여기에 저장하고 싶은 String 값을 넣습니다.
+                            editor.putString("userId", userId);
+
+                            // 변경사항을 커밋합니다.
+                            editor.apply();
+
+                            Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish(); // 현재 액티비티를 종료합니다.
                         }
 
                         @Override
@@ -135,20 +135,7 @@ public class KakaologinActivity extends AppCompatActivity {
                         }
                     });
 
-//                    loginButton.setVisibility(View.GONE);
-//                    logoutButton.setVisibility(View.VISIBLE);
-
-                } else {
-                    nickName.setText(null);
-                    profileImage.setImageBitmap(null);
-
-                    loginButton.setVisibility(View.VISIBLE);
-                    logoutButton.setVisibility(View.GONE);
                 }
-//                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
-                // Intent에 userId 추가
-//                intent.putExtra("userId", String.valueOf(kakaoUser.getId()));
-//                startActivity(intent);
                 return null;
             }
         });
