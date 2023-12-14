@@ -22,7 +22,9 @@ import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 
 import kotlin.Unit;
@@ -98,7 +100,8 @@ public class KakaologinActivity extends AppCompatActivity {
                             "씨앗", // 초기 티어 설정
                             0, // 초기 토마토 소지 개수
                             "00:00",
-                            R.drawable.tomato_3d// 초기 총 학습 시간
+                            R.drawable.tomato_3d, // 초기 총 학습 시간
+                            getTodayDate()
                     );
 
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -139,6 +142,14 @@ public class KakaologinActivity extends AppCompatActivity {
                 return null;
             }
         });
+    }
+
+    private String getTodayDate() {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(date);
+        System.out.println("오늘 날짜: " + dateString);
+        return dateString;
     }
 }
 

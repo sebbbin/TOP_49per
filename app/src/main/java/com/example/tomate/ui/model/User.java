@@ -9,14 +9,23 @@ public class User {
     private long Tomato; //토마토 소지 개수
     private String totalStudyTime;
     private int tierImageID;// 티어 이미지 리소스
+    private String startDate;
 
-    public User(long userId, String userName, String tier, long Tomato, String totalStudyTime, int tierImageID) {
+    public User(long userId, String userName, String tier, long Tomato, String totalStudyTime, int tierImageID, String startDate) {
         setUserId(userId);
         setUserName(userName);
         setTier(tier);
         setTomato(Tomato);
         setTotalStudyTime(totalStudyTime);
         setTierImageID(tierImageID);
+        setStartDate(startDate);
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public String getTotalStudyTime() {
