@@ -5,7 +5,8 @@
     android:id="@+id/RankingContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_grid">
+    android:background="@drawable/background_grid"
+    android:paddingBottom="60dp">
 
     <LinearLayout
         android:layout_width="match_parent"
