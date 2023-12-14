@@ -247,7 +247,7 @@ public class TimerActivity extends AppCompatActivity {
                 timeControlDialog.dismiss();
             }
         });
-
+        timeControlDialog.setCancelable(false); // 다이얼로그가 취소 불가능하도록 설정
         timeControlDialog.show();
     }
 
