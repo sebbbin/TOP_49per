@@ -4,6 +4,7 @@ import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE;
 import static androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -143,10 +144,10 @@ public class TimerActivity extends AppCompatActivity {
         com.example.tomate.databinding.ActivityTimerBinding timerBinding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(timerBinding.getRoot());
         backgroundFragment = new BackgroundFragment();
-        userId = getIntent().getStringExtra("userId");
-        if (userId != null) {
-            Log.d("timerActivity userId", userId);
-        }
+
+        SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        userId = sharedPref.getString("userId", "");
+        Log.d("timerActivity userId", "UserId: " + userId);
 
         exitDialog = new Dialog(TimerActivity.this);       // Dialog 초기화
         exitDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);

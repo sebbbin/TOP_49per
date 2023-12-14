@@ -80,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TimerActivity.class);
-                if (userId == null) {
-                    userId = "1";
-                }
-                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
