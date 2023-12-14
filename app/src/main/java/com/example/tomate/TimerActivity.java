@@ -193,13 +193,14 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // 기본 25분 0초로 설정
                 //TimerFragment timerFragment = (TimerFragment) getSupportFragmentManager().findFragmentById(R.id.activity_timer_main_frm);
-                if (timerFragment != null) {
-                    timer_minute = 25;
-                    timer_second = 0;
-                    timerFragment.setTime(25,0);
-                    timerFragment.startTimer(); // 타이머 시작
-                }
+//                if (timerFragment != null) {
+//                    timer_minute = 25;
+//                    timer_second = 0;
+//                    timerFragment.setTime(25,0);
+//                    timerFragment.startTimer(); // 타이머 시작
+//                }
                 timeControlDialog.dismiss();
+                finish();
             }
         });
 
@@ -224,6 +225,9 @@ public class TimerActivity extends AppCompatActivity {
                     timer_minute = selectedMinute;
                     timer_second = selectedSeconds;
                     timerFragment.setTime(selectedMinute, selectedSeconds);
+                    if (selectedMinute == 0 && selectedMinute == 0) {
+                        timerFragment.setTime(25, 0);
+                    }
                     timerFragment.startTimer(); // 타이머 시작
                 }
 
