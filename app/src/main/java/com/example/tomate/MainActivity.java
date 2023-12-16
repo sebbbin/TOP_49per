@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (userId == null) {
-            userId = "6";
-        }
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MypageFragment()).commit();
 
