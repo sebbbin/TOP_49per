@@ -1,11 +1,18 @@
 package com.example.tomate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.example.tomate.ui.model.User;
@@ -20,8 +27,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.tomate.databinding.ActivityMainBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import com.example.tomate.MygoalActivity;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         User user1 = new User(1, "이민희", "토마토마스터", 1523, "00:20:59", 0);
         User user2 = new User(2, "나세빈", "방울토마토", 123, "00:20:59", 1);
         User user3 = new User(3, "황서현", "토마토꽃", 53, "00:20:59", 2);
@@ -48,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.child("User").child("user123").setValue(user123);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         userId = getIntent().getStringExtra("userId");
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -80,17 +102,41 @@ public class MainActivity extends AppCompatActivity {
 
         timerButton.setAdjustViewBounds(true);
         timerButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
+
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // 현재 날짜 가져오기 (예시로 LocalDate 사용)
+        LocalDate currentDate = LocalDate.now();
+
+        // SharedPreferences에 저장된 최근 실행 날짜 가져오기
+        String savedDate = prefs.getString("lastRunDate", "default_value");
+
+        if (!savedDate.equals(currentDate.toString())) {
+            // 첫 번째 실행일 때의 처리 (다른 액티비티를 실행하도록 등)
+            editor.putString("lastRunDate", currentDate.toString());
+            editor.apply();
+
+            Intent mygoalintent = new Intent(MainActivity.this, MygoalActivity.class);
+            mygoalintent.putExtra("userId", userId);
+            startActivity(mygoalintent);
+        } else {
+            // 이미 실행한 적이 있는 경우의 처리
+            // 일반적인 로직 실행
+        }
+
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, TimerActivity.class);
                 if (userId == null) {
                     userId = "1";
                 }
                 intent.putExtra("userId", userId);
                 startActivity(intent);
+
             }
         });
     }
-
 }
