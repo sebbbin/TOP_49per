@@ -55,14 +55,48 @@
 
 
         </LinearLayout>
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2023년 09월 23일 최고의 토마토 마스터!"
-            android:paddingLeft="20dp"
-            android:fontFamily="@font/default_bold"
+            android:orientation="horizontal"
+            android:gravity="center"
 
-            />
+            >
+
+            <TextView
+                android:id="@+id/todayDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023년 09월 23일 최고의 토마토 마스터!"
+                android:paddingLeft="20dp"
+                android:paddingRight="23dp"
+                android:fontFamily="@font/default_bold"
+
+
+                />
+            <Switch
+
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:showText="true"
+                android:switchTextAppearance="@style/CustomSwitchStyle"
+                android:textOff="토마토"
+                android:textOn="총시간"
+                android:textSize="0dp"
+                android:thumb="@drawable/switch_btn_selector"
+                android:track="@drawable/switch_background"
+                android:checked="false"
+                android:switchMinWidth="70dp"
+                android:text=""/>
+
+
+
+
+        </LinearLayout>
+
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -233,6 +267,7 @@
 
         </LinearLayout>
         <TextView
+            android:id="@+id/totalRanking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="오늘 전체 14,869명 내 등수 1등 상위 1%"

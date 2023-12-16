@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,17 +25,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class RankingFragment extends Fragment {
     private RecyclerView userRecyclerView;
     private UserAdapter userAdapter;
     private List<User> userList = new ArrayList<>();
+
+    private int userCount=0;
 
     private Map<String,Integer> tierList = new HashMap<String,Integer>(){{
         put("토마토마스터",R.drawable.tomato_master);
@@ -62,6 +71,14 @@ public class RankingFragment extends Fragment {
             }
         });
 
+
+        // 오늘 날짜를 가져와서 문자열로 변환
+        String currentDate = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(new Date());
+
+        //날짜 설정
+        TextView dateTextView = view.findViewById(R.id.todayDate);
+        dateTextView.setText(currentDate + " 최고의 토마토 마스터!");
+
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("User");
 
         ImageView goldMedal = view.findViewById(R.id.goldMedal);
@@ -87,6 +104,7 @@ public class RankingFragment extends Fragment {
                         user.setTierImageID(tierImageId.intValue());
                     }
                     userList.add(user);
+                    userCount++;
 
                 }
                 Collections.reverse(userList);
@@ -114,7 +132,99 @@ public class RankingFragment extends Fragment {
 
 
 
+                TextView totalRanking = view.findViewById(R.id.totalRanking);
+                totalRanking.setText("오늘 전체 "+userCount+"명 내 등수 1등 상위 1%");
+
+                Switch toggleButton = view.findViewById(R.id.toggleButton);
+                toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (isChecked) {
+                            User tempUser= iter.next();
+                            TextView topOneName = view.findViewById(R.id.topOneName);
+                            TextView topOneTomato = view.findViewById(R.id.topOneTomato);
+                            topOneName.setText(tempUser.getUserName());
+                            topOneTomato.setText(tempUser.getTotalStudyTime());
+
+                            tempUser= iter.next();
+                            TextView topTwoName = view.findViewById(R.id.topTwoName);
+                            TextView topTwoTomato = view.findViewById(R.id.topTwoTomato);
+                            topTwoName.setText(tempUser.getUserName());
+                            topTwoTomato.setText(tempUser.getTotalStudyTime());
+
+                            tempUser= iter.next();
+                            TextView topThreeName = view.findViewById(R.id.topThreeName);
+                            TextView topThreeTomato = view.findViewById(R.id.topThreeTomato);
+                            topThreeName.setText(tempUser.getUserName());
+                            topThreeTomato.setText(tempUser.getTotalStudyTime());
+
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+                            // 순공시간을 기준으로 정렬
+                            Collections.sort(userList, new Comparator<User>() {
+                                @Override
+                                public int compare(User u1, User u2) {
+                                    try {
+                                        // 순공시간 문자열을 Date로 파싱합니다.
+                                        Date time1 = timeFormat.parse(u1.getTotalStudyTime());
+                                        Date time2 = timeFormat.parse(u2.getTotalStudyTime());
+                                        // Date를 비교합니다.
+                                        return time2.compareTo(time1);
+                                    } catch (ParseException e) {
+                                        throw new IllegalArgumentException(e);
+                                    }
+                                }
+                            });
+
+                            // 데이터 변경을 알리고, UI를 업데이트
+                            userAdapter.notifyDataSetChanged();
+
+                            // RecyclerView의 각 항목 TextView에 순공시간을 업데이트
+                            for (int i = 0; i < userRecyclerView.getChildCount(); i++) {
+                                View itemView = userRecyclerView.getChildAt(i);
+                                TextView tomatoTextView = itemView.findViewById(R.id.Tomato);
+                                User user = userList.get(i);
+                                tomatoTextView.setText(user.getTotalStudyTime());
+                            }
+
+                        } else {
+                            User tempUser= iter.next();
+                            TextView topOneName = view.findViewById(R.id.topOneName);
+                            TextView topOneTomato = view.findViewById(R.id.topOneTomato);
+                            topOneName.setText(tempUser.getUserName());
+                            topOneTomato.setText(tempUser.getTomato()+"개");
+
+                            tempUser= iter.next();
+                            TextView topTwoName = view.findViewById(R.id.topTwoName);
+                            TextView topTwoTomato = view.findViewById(R.id.topTwoTomato);
+                            topTwoName.setText(tempUser.getUserName());
+                            topTwoTomato.setText(tempUser.getTomato()+"개");
+
+                            tempUser= iter.next();
+                            TextView topThreeName = view.findViewById(R.id.topThreeName);
+                            TextView topThreeTomato = view.findViewById(R.id.topThreeTomato);
+                            topThreeName.setText(tempUser.getUserName());
+                            topThreeTomato.setText(tempUser.getTomato()+"개");
+
+                        }
+                        userAdapter.notifyDataSetChanged();
+                    }
+                });
+
+
+
+
+
+
+
             }
+
+
+
+
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
