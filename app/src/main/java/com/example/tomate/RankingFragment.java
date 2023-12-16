@@ -53,6 +53,15 @@ public class RankingFragment extends Fragment {
         userRecyclerView.setAdapter(userAdapter);
         userRecyclerView.setLayoutManager(new LinearLayoutManager((getContext())));
 
+        ImageView mypageIv = view.findViewById(R.id.ranking_mypage_iv);
+        mypageIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.changeToMypageFragment();
+            }
+        });
+
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("User");
 
         ImageView goldMedal = view.findViewById(R.id.goldMedal);

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -40,6 +41,15 @@ public class StudyrecordFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studyrecord, container, false);
+
+        ImageView mypageIv = view.findViewById(R.id.studyrecord_mypage_iv);
+        mypageIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.changeToMypageFragment();
+            }
+        });
 
         recyclerView = view.findViewById(R.id.Recordrecyclerview);
         recordAdapter = new RecordAdapter(recordData);

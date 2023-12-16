@@ -16,6 +16,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -115,5 +117,17 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         });
+    }
+
+    public void changeToMypageFragment() {
+        // MyPageFragment 인스턴스 생성
+        MypageFragment myPageFragment = new MypageFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.main_frame, myPageFragment);
+        fragmentTransaction.commit();
+
     }
 }
