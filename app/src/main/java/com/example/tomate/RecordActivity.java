@@ -1,5 +1,6 @@
 package com.example.tomate;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -34,6 +37,7 @@ public class RecordActivity extends AppCompatActivity {
     LineDataSet lineDataSet1;
     private TextView textViewPureStudyTime;
     private TextView textViewTotalStudyTime;
+    private TextView textViewTomatoGoal;
     private DatabaseReference mDatabase;
     String userId;
 
@@ -44,9 +48,7 @@ public class RecordActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = getIntent().getStringExtra("userId");
-        //Log.d("Record", userId);
         textViewPureStudyTime = findViewById(R.id.textViewPureStudyTime);
-
         mDatabase.child("RecordData").orderByChild("userId").equalTo(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -85,8 +87,37 @@ public class RecordActivity extends AppCompatActivity {
                         Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
                     }
                 });
+        textViewTomatoGoal = findViewById(R.id.textViewTomatoGoal);
+        if (userId != null) {
+            // Firebase Realtime Database 참조 가져오기
 
+            DatabaseReference tomatoRef = FirebaseDatabase.getInstance().getReference("TomatoData").child(userId);
 
+            tomatoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int totalTomatoCount = 0; // 토마토 개수의 총합을 저장할 변수 초기화
+                    for (DataSnapshot tomatoSnapshot : dataSnapshot.getChildren()) {
+                        // 각 userId의 tomato_cnt 값을 가져와서 더하기
+                        String tomatoCount = tomatoSnapshot.child("tomato_cnt").getValue(String.class);
+                        if (tomatoCount != null) {
+                            int count = Integer.parseInt(tomatoCount);
+                            totalTomatoCount += count;
+                        }
+                    }
+                    // 총합을 textViewTomatoGoal에 설정
+                    textViewTomatoGoal.setText(String.valueOf(totalTomatoCount));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                }
+            });
+        }
+        else{
+            Log.w("TAG", "userId: null");
+        }
 
 
         lineChart = (LineChart) findViewById(R.id.chart);
@@ -125,15 +156,20 @@ public class RecordActivity extends AppCompatActivity {
 
 
         lineChart.invalidate(); // 차트 업데이트
-
-        Button backbtn = (Button)findViewById(R.id.backbtn);
+        Button backbtn = findViewById(R.id.backbtn);
 
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "뒤로가기 버튼 클릭", Toast.LENGTH_LONG).show();
+                // FragmentTransaction 시작
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment = new StudyrecordFragment(userId); // 프래그먼트를 생성합니다.
+                transaction.replace(R.id.fragment_container, fragment); // fragment_container에 프래그먼트를 추가합니다.
+                transaction.commit();
             }
         });
+
+
 
     }
 
