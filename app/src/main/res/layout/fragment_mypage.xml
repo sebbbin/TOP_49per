@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/fragment_mypage_tier_tv"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         app:layout_constraintStart_toEndOf="@id/fragment_mypage_tear_iv"
         app:layout_constraintTop_toTopOf="@id/fragment_mypage_tear_iv"
@@ -41,7 +41,7 @@
     <TextView
         android:id="@+id/fragment_mypage_name_tv"
         android:layout_width="wrap_content"
-        android:layout_height="27dp"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         app:layout_constraintStart_toStartOf="@id/fragment_mypage_tear_iv"
         android:textSize="18sp"
@@ -51,7 +51,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:id="@+id/fragment_mypage_member_out_tv"
         app:layout_constraintStart_toStartOf="@id/fragment_mypage_profile_iv"
         android:textSize="20dp"
@@ -64,10 +64,10 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:id="@+id/fragment_mypage_logout_tv"
         app:layout_constraintStart_toStartOf="@id/fragment_mypage_profile_iv"
-        android:textSize="20sp"
+        android:textSize="20dp"
         app:layout_constraintTop_toBottomOf="@id/fragment_mypage_member_out_tv"
         android:layout_marginTop="30dp"
         android:text="로그아웃"
@@ -78,7 +78,7 @@
     <TextView
         android:id="@+id/fragment_mypage_member_out_arrow_tv"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:text=">"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -92,7 +92,7 @@
     <TextView
         android:id="@+id/fragment_mypage_logout_out_arrow_tv"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:text=">"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -114,7 +114,7 @@
         <TextView
             android:id="@+id/fragment_mypage_with_tomate_tv"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:text="톰메이트와 "
             android:textSize="20sp"
             android:gravity="center_horizontal"
