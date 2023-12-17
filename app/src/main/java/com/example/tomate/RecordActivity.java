@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tomate.ui.model.Goal;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
@@ -116,7 +118,30 @@ public class RecordActivity extends AppCompatActivity {
             }
         });
 
-    }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        Log.d("uesrId", recordData.getUserId());
+        Log.d("getDate", recordData.getDate());
+        databaseReference.child("Goal").child(recordData.getUserId()).child(recordData.getDate())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Goal goal = dataSnapshot.getValue(Goal.class);
+                if (goal != null) {
+                    int goal_progress = (int) ((Integer.parseInt(recordData.getTomato_cnt())) / (double) goal.getGoal_tomato() * 100);
+                    TextView progressTv = findViewById(R.id.record_progress_tv);
+                    progressTv.setText("목표 달성량 : " + goal_progress + "%");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("database Error", String.valueOf(databaseError));
+            }
+        });
+
+}
 
     private String formatDate(String inputDate) {
         // 날짜 파싱을 위한 형식을 정의합니다.
