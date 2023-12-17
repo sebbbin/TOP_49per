@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="10dp">
 
@@ -18,7 +18,7 @@
             <Button
                 android:id="@+id/StudyRecordButton"
                 android:layout_width="370dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#F5F5F1"
                 android:gravity="center"
@@ -34,10 +34,10 @@
             android:layout_marginLeft="30dp"
             android:fontFamily="@font/default_bold"
             android:paddingLeft="15dp"
-            android:paddingTop="25dp"
+            android:layout_marginTop="17dp"
             android:text="2023-08-11"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -47,11 +47,11 @@
             android:layout_toRightOf="@id/StudyRecordButton_day"
             android:fontFamily="@font/default_bold"
             android:paddingLeft="15dp"
-            android:paddingTop="10dp"
+            android:paddingTop="7dp"
             android:text="총 공부 시간 :\n순 공부 시간 :"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
@@ -60,11 +60,12 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/StudyRecordButton_text"
             android:fontFamily="@font/default_bold"
-            android:text="   08:19:48"
+            android:text="08:19:48"
             android:paddingTop="10dp"
             android:textAlignment="center"
+            android:paddingLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
@@ -74,10 +75,11 @@
             android:layout_below="@id/StudyRecordButton_totaltime"
             android:layout_toRightOf="@id/StudyRecordButton_text"
             android:fontFamily="@font/default_bold"
-            android:text="   06:29:11"
+            android:text="06:29:11"
+            android:paddingLeft="15dp"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
 
