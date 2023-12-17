@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_record:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
+                    case R.id.navigation_record:getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
                         break;
                     case R.id.navigation_ranking:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new RankingFragment()).commit();
@@ -78,26 +77,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        Intent receivedIntent = getIntent();
+        if (receivedIntent != null) {
+            boolean flag = receivedIntent.getBooleanExtra("flag", false);
 
-        // 현재 날짜 가져오기 (예시로 LocalDate 사용)
-        LocalDate currentDate = LocalDate.now();
-
-        // SharedPreferences에 저장된 최근 실행 날짜 가져오기
-        String savedDate = prefs.getString("lastRunDate", "default_value");
-
-        if (!savedDate.equals(currentDate.toString())) {
-            // 첫 번째 실행일 때의 처리 (다른 액티비티를 실행하도록 등)
-            editor.putString("lastRunDate", currentDate.toString());
-            editor.apply();
-
-            Intent mygoalintent = new Intent(MainActivity.this, MygoalActivity.class);
-            mygoalintent.putExtra("userId", userId);
-            startActivity(mygoalintent);
-        } else {
-            // 이미 실행한 적이 있는 경우의 처리
-            // 일반적인 로직 실행
+            if (flag) {
+                Intent myGoalIntent = new Intent(this, MygoalActivity.class);
+                myGoalIntent.putExtra("userId", userId);
+                startActivity(myGoalIntent);
+            }
         }
 
         ImageButton timerButton = findViewById(R.id.timer_button);
