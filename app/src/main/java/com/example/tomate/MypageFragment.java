@@ -71,10 +71,16 @@ public class MypageFragment extends Fragment {
                 String userId = sharedPref.getString("userId", "");
                 Log.d("TAG", "UserId: " + userId);
 
+                if (userId.equals("3225907701")) {
+                    // 디버깅용이라면 회원정보 삭제 x
+                    mainActivity.logoutOrSignout();
+                    return;
+                }
+
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
                 DatabaseReference userRef = mDatabase.child(userId);
 
-                // user1 데이터 삭제
+                // user 데이터 삭제
                 userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -133,7 +139,25 @@ public class MypageFragment extends Fragment {
                             User user = snapshot.getValue(User.class);
                             if (user != null) {
                                 userName = user.getUserName();
-                                tierStr = user.getTier();
+                                tierStr = calculateTier(user.getTomato());
+                                if (!user.getTier().equals(tierStr)) {
+                                    user.setTier(tierStr);
+                                    if (tierStr.equals("토마토마스터")) {
+                                        user.setTierImageID(R.drawable.tomato_master);
+                                    } else if (tierStr.equals("방울토마토")) {
+                                        user.setTierImageID(R.drawable.cherry_tomato);
+                                    } else if (tierStr.equals("토마토꽃")) {
+                                        user.setTierImageID(R.drawable.tomato_flower);
+                                    } else if (tierStr.equals("본잎")) {
+                                        user.setTierImageID(R.drawable.adult_leaf);
+                                    } else if (tierStr.equals("떡잎")) {
+                                        user.setTierImageID(R.drawable.baby_leaf);
+                                    } else {
+                                        user.setTierImageID(R.drawable.seed);
+                                    }
+
+                                    snapshot.getRef().setValue(user);
+                                }
                                 TextView tierTv = rootView.findViewById(R.id.fragment_mypage_tier_tv);
                                 tierTv.setText(tierStr);
                                 TextView userNameTv = rootView.findViewById(R.id.fragment_mypage_name_tv);
@@ -182,5 +206,21 @@ public class MypageFragment extends Fragment {
         long daysBetween = ChronoUnit.DAYS.between(start, current) + 1;
 
         return String.valueOf(daysBetween);
+    }
+
+    private String calculateTier(long tomato_cnt) {
+        if (tomato_cnt > 500) {
+            return "토마토마스터";
+        } else if (tomato_cnt >= 200) {
+            return "방울토마토";
+        } else if (tomato_cnt >= 100) {
+            return "토마토꽃";
+        } else if (tomato_cnt >= 50) {
+            return "본잎";
+        } else if (tomato_cnt >= 10) {
+            return "떡잎";
+        } else {
+            return "새싹";
+        }
     }
 }

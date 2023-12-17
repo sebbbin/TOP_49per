@@ -3,12 +3,15 @@ package com.example.tomate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +40,13 @@ public class KakaologinActivity extends AppCompatActivity {
     private View loginButton, logoutButton, gotoMainButton;
     private TextView nickName;
     private ImageView profileImage;
+    Dialog dialog;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dialog.dismiss();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,32 @@ public class KakaologinActivity extends AppCompatActivity {
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
         KakaoSdk.init(this,"6b761aebb82413c0a8e1c6a44cb77377");
+        dialog = new Dialog(this);
+        showDialog(dialog);
+
+        Button debugBtn = findViewById(R.id.kakaologin_for_debug_btn);
+        debugBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                // SharedPreferences.Editor 객체를 사용하여 데이터를 저장합니다.
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("userId", "3225907701");
+
+                // 변경사항을 커밋합니다.
+                editor.apply();
+
+                if (dialog.isShowing()) {
+                    return;
+                }
+                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                intent.putExtra("flag", true);
+                startActivity(intent);
+                finish(); // 현재 액티비티를 종료합니다.
+            }
+        });
+
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -125,8 +161,11 @@ public class KakaologinActivity extends AppCompatActivity {
 
                             // 변경사항을 커밋합니다.
                             editor.apply();
-
+                            if (dialog.isShowing()) {
+                                return;
+                            }
                             Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                            intent.putExtra("flag", true);
                             startActivity(intent);
                             finish(); // 현재 액티비티를 종료합니다.
                         }
@@ -150,6 +189,21 @@ public class KakaologinActivity extends AppCompatActivity {
         String dateString = formatter.format(date);
         System.out.println("오늘 날짜: " + dateString);
         return dateString;
+    }
+
+    private void showDialog(Dialog dialog) {
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_notice);
+        dialog.setCancelable(false);
+
+         dialog.findViewById(R.id.notice_x_iv).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 dialog.dismiss();
+             }
+         });
+        dialog.show();
     }
 }
 

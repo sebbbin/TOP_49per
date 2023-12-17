@@ -31,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kakao.sdk.user.UserApiClient;
 
+import java.time.LocalDate;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
@@ -51,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (userId == null) {
-            userId = "6";
-        }
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MypageFragment()).commit();
 
@@ -61,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_record:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
+                    case R.id.navigation_record:getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
                         break;
                     case R.id.navigation_ranking:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new RankingFragment()).commit();
@@ -71,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Intent receivedIntent = getIntent();
+        if (receivedIntent != null) {
+            boolean flag = receivedIntent.getBooleanExtra("flag", false);
+
+            if (flag) {
+                Intent myGoalIntent = new Intent(this, MygoalActivity.class);
+                myGoalIntent.putExtra("userId", userId);
+                startActivity(myGoalIntent);
+            }
+        }
 
         ImageButton timerButton = findViewById(R.id.timer_button);
         Drawable drawable = getResources().getDrawable(R.drawable.tomato_3d);
