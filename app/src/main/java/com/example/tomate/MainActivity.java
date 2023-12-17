@@ -43,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public String userId;
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("onDestroy", "main");
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
