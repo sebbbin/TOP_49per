@@ -93,12 +93,13 @@ public class TimerFragment extends Fragment {
             public void run() {
                 int tmpMinute = minute;
                 int tmpSecond = second;
-                while (tmpSecond >= 0) {
+                while (tmpSecond >= 0 && timerActivity != null && !timerActivity.isFinishing()) {
                     tmpMinute = tmpSecond / 60;
                     Log.d("time", String.format("%d", tmpSecond));
 
                     int finalTmpSecond = tmpSecond;
                     int finalTmpMinute = tmpMinute;
+                    if (timerActivity == null || timerActivity.isFinishing()) break;
                     timerActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -113,15 +114,21 @@ public class TimerFragment extends Fragment {
                     }
                     if (tmpSecond == 0) {
                         // 토마토 개수 올라가는 기능
+                        if (timerActivity == null || timerActivity.isFinishing()) break;
                         TextView tomato_cnt_tv = timerActivity.findViewById(R.id.activity_timer_bin_tv);
                         timerActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tomato_cnt_tv.setText(String.format("%d", Integer.parseInt(tomato_cnt_tv.getText().toString()) + 1));
+                                if (timerActivity != null && !timerActivity.isFinishing()) {
+                                    tomato_cnt_tv.setText(String.format("%d", Integer.parseInt(tomato_cnt_tv.getText().toString()) + 1));
+                                }
                             }
                         });
+                        if (timerActivity == null || timerActivity.isFinishing()) break;
                         timerActivity.makeRestFragment();
                     }
+                    if (timerActivity == null || timerActivity.isFinishing()) break;
+
                     timerActivity.total_study_time++;
                     timerActivity.pure_study_time++;
                     tmpSecond--;

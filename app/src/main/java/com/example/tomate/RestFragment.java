@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 public class RestFragment extends Fragment {
     private TimerActivity timerActivity;
     private ViewGroup rootView;
-    private int second = 5 * 1;
+    private int second = 5 * 60;
     private int minute = 0;
 
     @Override
@@ -39,14 +39,18 @@ public class RestFragment extends Fragment {
             @Override
             public void run() {
                 while (second >= 0) {
+                    if (timerActivity == null || timerActivity.isFinishing()) break;
                     minute = second / 60;
                     Log.d("rest", String.format("%d", second));
                     int finalMinute = minute;
                     int finalSecond = second;
+                    if (timerActivity == null || timerActivity.isFinishing()) break;
                     timerActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            timerTv.setText(String.format("%02d:%02d", finalMinute, finalSecond % 60));
+                            if (timerActivity != null && !timerActivity.isFinishing()) {
+                                timerTv.setText(String.format("%02d:%02d", finalMinute, finalSecond % 60));
+                            }
                         }
                     });
 
@@ -57,8 +61,11 @@ public class RestFragment extends Fragment {
                     }
                     if (second == 0) {
                         // 토마토 개수 올라가는 기능
-                        timerActivity.makeTimerFragment();
+                        if (timerActivity != null && !timerActivity.isFinishing()) {
+                            timerActivity.makeTimerFragment();
+                        }
                     }
+                    if (timerActivity == null || timerActivity.isFinishing()) break;
                     timerActivity.total_study_time++;
                     second--;
                 }

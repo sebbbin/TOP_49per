@@ -59,6 +59,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="50dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         >
         <ImageButton
             android:id="@+id/login"
@@ -69,6 +71,16 @@
             android:contentDescription="Kakao Login Button"
             android:background="@null"
             android:padding="20dp" />
+
+        <Button
+            android:id="@+id/kakaologin_for_debug_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/gray"
+            android:gravity="center"
+            android:text="디버깅용 로그인 버튼" />
+
         <Button
             android:id="@+id/logout"
             android:layout_width="match_parent"

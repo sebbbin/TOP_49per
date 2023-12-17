@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:fontFamily="@font/default_bold"/>
 
     <LinearLayout
@@ -31,22 +31,22 @@
         android:layout_marginRight="40dp"
         >
 
-        <NumberPicker
-            android:id="@+id/hourPicker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:selectionDividerHeight="0dp"
-            android:descendantFocusability="blocksDescendants" />
+<!--        <NumberPicker-->
+<!--            android:id="@+id/hourPicker"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:selectionDividerHeight="0dp"-->
+<!--            android:descendantFocusability="blocksDescendants" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="시간"
-            android:gravity="center"
-            android:padding="10dp"
-            android:fontFamily="@font/default_regular"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="시간"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:fontFamily="@font/default_regular"-->
+<!--            />-->
 
         <NumberPicker
             android:id="@+id/minutePicker"

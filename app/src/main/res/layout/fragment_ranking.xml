@@ -5,13 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_grid"
+    android:paddingBottom="60dp"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/ranking_mypage_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/mypage_img"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,14 +55,49 @@
 
 
         </LinearLayout>
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2023년 09월 23일 최고의 토마토 마스터!"
-            android:paddingLeft="20dp"
-            android:fontFamily="@font/default_bold"
+            android:orientation="horizontal"
+            android:gravity="center"
 
-            />
+            >
+
+            <TextView
+                android:id="@+id/todayDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023년 09월 23일 최고의 토마토 마스터!"
+                android:paddingLeft="20dp"
+                android:paddingRight="5dp"
+                android:fontFamily="@font/default_bold"
+                android:layout_gravity="left|end"
+
+
+                />
+            <Switch
+
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:showText="true"
+                android:switchTextAppearance="@style/CustomSwitchStyle"
+                android:textOff="토마토"
+                android:textOn="총시간"
+                android:textSize="0dp"
+                android:thumb="@drawable/switch_btn_selector"
+                android:track="@drawable/switch_background"
+                android:checked="false"
+                android:switchMinWidth="40dp"
+                android:text=""/>
+
+
+
+
+        </LinearLayout>
+
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -70,7 +113,7 @@
             android:gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_height="240dp">
+            android:layout_height="260dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -225,6 +268,7 @@
 
         </LinearLayout>
         <TextView
+            android:id="@+id/totalRanking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="오늘 전체 14,869명 내 등수 1등 상위 1%"

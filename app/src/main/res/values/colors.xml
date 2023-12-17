@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#E6F0EFE9</color>
     <color name="dialog">#FFF5F5F1</color>
+    <color name="gray">#ACA7A7</color>
+    <color name="deep_gray">#595550</color>
 </resources>

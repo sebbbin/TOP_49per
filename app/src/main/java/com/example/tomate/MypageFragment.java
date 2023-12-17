@@ -1,5 +1,8 @@
 package com.example.tomate;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,17 +26,33 @@ import com.kakao.sdk.user.UserApiClient;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import kotlin.jvm.functions.Function2;
 
 public class MypageFragment extends Fragment {
     ViewGroup rootView;
     String userName;
     String tierStr;
     String startDate;
+    String userId;
+    MainActivity mainActivity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity)getActivity();
+        userId = mainActivity.userId;
+    }
 
     @Nullable
     @Override
@@ -42,24 +61,38 @@ public class MypageFragment extends Fragment {
         getUserData();
 
         TextView signoutTv = rootView.findViewById(R.id.fragment_mypage_member_out_tv);
+
         signoutTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
-                DatabaseReference userRef = mDatabase.child("user6");
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-                // user1 데이터 삭제
+                // "userId" 키로 저장된 값을 가져옵니다. 기본값으로 "" (빈 문자열)을 사용합니다.
+                String userId = sharedPref.getString("userId", "");
+                Log.d("TAG", "UserId: " + userId);
+
+                if (userId.equals("3225907701")) {
+                    // 디버깅용이라면 회원정보 삭제 x
+                    mainActivity.logoutOrSignout();
+                    return;
+                }
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
+                DatabaseReference userRef = mDatabase.child(userId);
+
+                // user 데이터 삭제
                 userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // 데이터 삭제 성공 시 처리
-                        System.out.println("User1 data successfully deleted.");
+                        System.out.println(userId + "data successfully deleted.");
+                        mainActivity.logoutOrSignout();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // 데이터 삭제 실패 시 처리
-                        System.out.println("Error deleting User1 data: " + e.getMessage());
+                        System.out.println("Error deleting user data: " + e.getMessage());
                     }
                 });
 
@@ -67,64 +100,127 @@ public class MypageFragment extends Fragment {
         });
 
         TextView logoutTv = rootView.findViewById(R.id.fragment_mypage_logout_tv);
+
         logoutTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 로그아읏 버튼
-                logoutTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
-                            @Override
-                            public Unit invoke(Throwable throwable) {
-//                                updateKakaoLoginUi();
-                                return null;
-                            }
-                        });
-                    }
-                });
+                // SharedPreferences 객체를 가져옵니다. "MyPrefs"는 SharedPreferences 파일의 이름입니다.
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                // SharedPreferences.Editor 객체를 사용하여 데이터를 수정합니다.
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                // "userId" 키에 해당하는 데이터를 제거합니다.
+                editor.remove("userId");
+
+                // 변경사항을 커밋합니다.
+                editor.apply();
+                mainActivity.logoutOrSignout();
             }
         });
         return rootView;
     }
 
     private void getUserData() {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
-        DatabaseReference user1Ref = mDatabase.child("user2");
+        // SharedPreferences 객체를 가져옵니다. "MyPrefs"는 SharedPreferences 파일의 이름입니다.
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-        // 데이터를 읽기 위해 ValueEventListener 추가
-        user1Ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // dataSnapshot를 통해 user1의 데이터를 가져올 수 있음
-                User user = dataSnapshot.getValue(User.class);
-                userName = user.getUserName();
-                tierStr = user.getTier();
-                TextView tierTv = rootView.findViewById(R.id.fragment_mypage_tier_tv);
-                tierTv.setText(tierStr);
-                TextView userNameTv = rootView.findViewById(R.id.fragment_mypage_name_tv);
-                userNameTv.setText(userName);
-                ImageView tierIv = rootView.findViewById(R.id.fragment_mypage_tear_iv);
-                if (tierStr.equals("토마토마스터")) {
-                    tierIv.setImageResource(R.drawable.tomato_master);
-                } else if (tierStr.equals("방울토마토")) {
-                    tierIv.setImageResource(R.drawable.cherry_tomato);
-                } else if (tierStr.equals("토마토꽃")) {
-                    tierIv.setImageResource(R.drawable.tomato_flower);
-                } else if (tierStr.equals("본잎")) {
-                    tierIv.setImageResource(R.drawable.adult_leaf);
-                } else if (tierStr.equals("떡잎")) {
-                    tierIv.setImageResource(R.drawable.baby_leaf);
-                } else {
-                    tierIv.setImageResource(R.drawable.seed);
-                }
-            }
+        // "userId" 키로 저장된 값을 가져옵니다. 기본값으로 "" (빈 문자열)을 사용합니다.
+        String userId = sharedPref.getString("userId", "");
+        Log.d("TAG", "UserId: " + userId);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // 에러 처리
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        // userId에 해당하는 user의 total_cnt를 조회
+        databaseRef.child("User").orderByChild("userId").equalTo(Long.parseLong(userId))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            User user = snapshot.getValue(User.class);
+                            if (user != null) {
+                                userName = user.getUserName();
+                                tierStr = calculateTier(user.getTomato());
+                                if (!user.getTier().equals(tierStr)) {
+                                    user.setTier(tierStr);
+                                    if (tierStr.equals("토마토마스터")) {
+                                        user.setTierImageID(R.drawable.tomato_master);
+                                    } else if (tierStr.equals("방울토마토")) {
+                                        user.setTierImageID(R.drawable.cherry_tomato);
+                                    } else if (tierStr.equals("토마토꽃")) {
+                                        user.setTierImageID(R.drawable.tomato_flower);
+                                    } else if (tierStr.equals("본잎")) {
+                                        user.setTierImageID(R.drawable.adult_leaf);
+                                    } else if (tierStr.equals("떡잎")) {
+                                        user.setTierImageID(R.drawable.baby_leaf);
+                                    } else {
+                                        user.setTierImageID(R.drawable.seed);
+                                    }
+
+                                    snapshot.getRef().setValue(user);
+                                }
+                                TextView tierTv = rootView.findViewById(R.id.fragment_mypage_tier_tv);
+                                tierTv.setText(tierStr);
+                                TextView userNameTv = rootView.findViewById(R.id.fragment_mypage_name_tv);
+                                userNameTv.setText(userName);
+                                TextView startDateTv = rootView.findViewById(R.id.fragment_mypage_day_count_tv);
+                                startDateTv.setText(dateDiff(user.getStartDate())+"일째");
+                                ImageView tierIv = rootView.findViewById(R.id.fragment_mypage_tear_iv);
+                                if (tierStr.equals("토마토마스터")) {
+                                    tierIv.setImageResource(R.drawable.tomato_master);
+                                } else if (tierStr.equals("방울토마토")) {
+                                    tierIv.setImageResource(R.drawable.cherry_tomato);
+                                } else if (tierStr.equals("토마토꽃")) {
+                                    tierIv.setImageResource(R.drawable.tomato_flower);
+                                } else if (tierStr.equals("본잎")) {
+                                    tierIv.setImageResource(R.drawable.adult_leaf);
+                                } else if (tierStr.equals("떡잎")) {
+                                    tierIv.setImageResource(R.drawable.baby_leaf);
+                                } else {
+                                    tierIv.setImageResource(R.drawable.seed);
+                                }
+                                break; // 첫 번째 일치하는 데이터만 사용
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("onCancelled", "onCancelled");
+                    }
+                });
+    }
+    private String getTodayDate() {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(date);
+        System.out.println("오늘 날짜: " + dateString);
+        return dateString;
+    }
+
+    private String dateDiff(String startDate) {
+        String currentDate = getTodayDate();
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate current = LocalDate.parse(currentDate);
+
+        // 두 날짜 사이의 차이를 일(days) 단위로 계산
+        long daysBetween = ChronoUnit.DAYS.between(start, current) + 1;
+
+        return String.valueOf(daysBetween);
+    }
+
+    private String calculateTier(long tomato_cnt) {
+        if (tomato_cnt > 500) {
+            return "토마토마스터";
+        } else if (tomato_cnt >= 200) {
+            return "방울토마토";
+        } else if (tomato_cnt >= 100) {
+            return "토마토꽃";
+        } else if (tomato_cnt >= 50) {
+            return "본잎";
+        } else if (tomato_cnt >= 10) {
+            return "떡잎";
+        } else {
+            return "새싹";
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private List<User> userList;
     private Context context;
+    private boolean isTotalStudyTime = false;
 
     public UserAdapter(Context context, List<User> userList) {
         this.context = context;
@@ -33,13 +35,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 .inflate(R.layout.rankinglist_item, parent, false);
         return new UserViewHolder(itemView);
     }
-
+    public void toggleStudyTimeVisibility(boolean shouldShowTotalStudyTime) {
+        this.isTotalStudyTime = shouldShowTotalStudyTime;
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
         holder.userName.setText(user.getUserName());
         holder.tier.setText(user.getTier());
-        holder.Tomato.setText(String.valueOf(user.getTomato())+"개");
+        if(isTotalStudyTime){
+            holder.Tomato.setText(String.valueOf(user.getTotalStudyTime()));
+        }else {
+            holder.Tomato.setText(String.valueOf(user.getTomato()) + "개");
+        }
         holder.tierImageID.setImageResource(user.getTierImageID());
         holder.Ranking.setText(String.valueOf(userList.indexOf(user)+1)+".");
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_in_slide);
@@ -56,6 +65,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public TextView Tomato;
         public ImageView tierImageID;
 
+
+
         public TextView Ranking;
 
         public UserViewHolder(View view) {
@@ -65,6 +76,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             Tomato = view.findViewById(R.id.Tomato);
             tierImageID = view.findViewById(R.id.tierImageID);
             Ranking = view.findViewById(R.id.Ranking);
+
         }
     }
 

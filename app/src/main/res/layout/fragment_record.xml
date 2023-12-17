@@ -5,7 +5,8 @@
     android:id="@+id/RankingContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_grid">
+    android:background="@drawable/background_grid"
+    android:paddingBottom="60dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +28,7 @@
                 android:src="@drawable/tomato_3d" />
 
             <TextView
+                android:id="@+id/record_date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/default_bold"
@@ -53,17 +55,68 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/default_bold"
-            android:gravity="center"
-            android:text="총 공부 시간 : "
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:layout_marginTop="20dp"
-            android:textSize="21dp"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="211dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/default_bold"
+                android:gravity="center"
+                android:text=" 총 공부 시간 : "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="21dp" />
+
+            <TextView
+                android:id="@+id/textViewTotalStudyTime"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/default_bold"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="211dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/default_bold"
+                android:gravity="center"
+                android:text="순 공부 시간 : "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="21dp" />
+
+            <TextView
+                android:id="@+id/textViewPureStudyTime"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/default_bold"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+
+
         <TextView
+            android:id="@+id/record_progress_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/default_bold"
@@ -87,23 +140,32 @@
                 android:textColor="@color/black"
                 android:textSize="21dp"
                 />
+            <TextView
+                android:id="@+id/record_tomato_cnt_tv"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/default_bold"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="21dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <ImageView
-                android:layout_width="70dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/tomato_3d" />
+
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
             <Button
                 android:id="@+id/backbtn"
                 android:layout_width="230dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="20sp"
+                android:layout_height="wrap_content"
                 android:backgroundTint="#DBDBC5"
                 android:text="뒤로가기"
                 android:fontFamily="@font/default_bold"

@@ -1,0 +1,15 @@
+
+<resources>
+
+
+    <style name="CustomSwitchStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">6dp</item>
+        <item name="android:textColor">#737361</item>
+        <item name="android:fontFamily">@font/default_bold</item>
+        <item name="android:textStyle">bold</item> <!-- 또는 bold, italic 등 -->
+    </style>
+
+
+</resources>
+
+
