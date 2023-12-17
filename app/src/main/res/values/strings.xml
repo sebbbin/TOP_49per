@@ -3,4 +3,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="notice">zip 파일로 실행 시 디버깅용 로그인 버튼 클릭 바람.\n\nzip 파일로 실행 시 카카오 로그인은 디버깅 해시 파일을 카카오 디벨로퍼스에 추가해야하는 문제로 디버깅용 로그인 루트를 따로 만들었습니다.\n\n첨부해놓은 apk에선 카카오 로그인 진행이 가능하니 참고해주시기 바랍니다.</string>
 </resources>
