@@ -55,7 +55,7 @@ public class MygoalActivity extends AppCompatActivity{
                     goal = new Goal(userId, LocalDate.now(), new_goal);
                 }
 
-                userGoalsRef.child(userId).setValue(goal)
+                userGoalsRef.child(userId).child(goal.getDate()).setValue(goal)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
