@@ -63,6 +63,7 @@ public class KakaologinActivity extends AppCompatActivity {
                 editor.apply();
 
                 Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                intent.putExtra("flag", true);
                 startActivity(intent);
                 finish(); // 현재 액티비티를 종료합니다.
             }
