@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("onDestroy", "main");
-        logoutOrSignout();
     }
 
     @Override
