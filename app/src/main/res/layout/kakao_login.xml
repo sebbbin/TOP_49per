@@ -79,6 +79,7 @@
             android:layout_gravity="center_vertical"
             android:backgroundTint="@color/gray"
             android:gravity="center"
+            android:visibility="invisible"
             android:text="디버깅용 로그인 버튼" />
 
         <Button

@@ -45,7 +45,7 @@ public class KakaologinActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dialog.dismiss();
+//        dialog.dismiss();
     }
 
     @Override
@@ -57,8 +57,8 @@ public class KakaologinActivity extends AppCompatActivity {
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
         KakaoSdk.init(this,"6b761aebb82413c0a8e1c6a44cb77377");
-        dialog = new Dialog(this);
-        showDialog(dialog);
+//        dialog = new Dialog(this);
+//        showDialog(dialog);
 
         Button debugBtn = findViewById(R.id.kakaologin_for_debug_btn);
         debugBtn.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +73,9 @@ public class KakaologinActivity extends AppCompatActivity {
                 // 변경사항을 커밋합니다.
                 editor.apply();
 
-                if (dialog.isShowing()) {
-                    return;
-                }
+//                if (dialog.isShowing()) {
+//                    return;
+//                }
                 Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
                 intent.putExtra("flag", true);
                 startActivity(intent);
@@ -161,9 +161,9 @@ public class KakaologinActivity extends AppCompatActivity {
 
                             // 변경사항을 커밋합니다.
                             editor.apply();
-                            if (dialog.isShowing()) {
-                                return;
-                            }
+//                            if (dialog.isShowing()) {
+//                                return;
+//                            }
                             Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
                             intent.putExtra("flag", true);
                             startActivity(intent);
