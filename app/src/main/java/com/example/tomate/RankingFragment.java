@@ -141,6 +141,31 @@ public class RankingFragment extends Fragment {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                         if (isChecked) {
+
+
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+                            // 순공시간을 기준으로 정렬
+                            Collections.sort(userList, new Comparator<User>() {
+                                @Override
+                                public int compare(User u1, User u2) {
+                                    try {
+                                        Date time1 = timeFormat.parse(u1.getTotalStudyTime());
+                                        Date time2 = timeFormat.parse(u2.getTotalStudyTime());
+                                        return time2.compareTo(time1);
+                                    } catch (ParseException e) {
+                                        // 오류 로그를 출력합니다. 이를 통해 어떤 데이터가 문제를 일으키는지 파악할 수 있습니다.
+                                        Log.e("RankingFragment", "Unparseable date in totalStudyTime", e);
+                                        // 오류가 발생한 경우의 안전한 값 반환
+                                        return 0;
+                                    }
+                                }
+                            });
+
+                            userAdapter.toggleStudyTimeVisibility(isChecked);
+
+                            Iterator<User> iter = userList.iterator();
+
                             User tempUser= iter.next();
                             TextView topOneName = view.findViewById(R.id.topOneName);
                             TextView topOneTomato = view.findViewById(R.id.topOneTomato);
@@ -159,36 +184,37 @@ public class RankingFragment extends Fragment {
                             topThreeName.setText(tempUser.getUserName());
                             topThreeTomato.setText(tempUser.getTotalStudyTime());
 
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                            // 데이터 변경을 알리고, UI를 업데이트
 
-                            // 순공시간을 기준으로 정렬
+
+//                            // RecyclerView의 각 항목 TextView에 순공시간을 업데이트
+//                            for (int i = 0; i < userRecyclerView.getChildCount(); i++) {
+//                                View itemView = userRecyclerView.getChildAt(i);
+//                                TextView tomatoTextView = itemView.findViewById(R.id.Tomato);
+//                                User user = userList.get(i);
+//                                tomatoTextView.setText(user.getTotalStudyTime());
+//                            }
+
+
+
+                        } else {
                             Collections.sort(userList, new Comparator<User>() {
                                 @Override
                                 public int compare(User u1, User u2) {
-                                    try {
-                                        // 순공시간 문자열을 Date로 파싱합니다.
-                                        Date time1 = timeFormat.parse(u1.getTotalStudyTime());
-                                        Date time2 = timeFormat.parse(u2.getTotalStudyTime());
-                                        // Date를 비교합니다.
-                                        return time2.compareTo(time1);
-                                    } catch (ParseException e) {
-                                        throw new IllegalArgumentException(e);
-                                    }
+
+                                        Long tomato1 = u1.getTomato();
+                                        Long tomato2 = u2.getTomato();
+                                        return tomato2.compareTo(tomato1);
+
                                 }
                             });
 
-                            // 데이터 변경을 알리고, UI를 업데이트
-                            userAdapter.notifyDataSetChanged();
 
-                            // RecyclerView의 각 항목 TextView에 순공시간을 업데이트
-                            for (int i = 0; i < userRecyclerView.getChildCount(); i++) {
-                                View itemView = userRecyclerView.getChildAt(i);
-                                TextView tomatoTextView = itemView.findViewById(R.id.Tomato);
-                                User user = userList.get(i);
-                                tomatoTextView.setText(user.getTotalStudyTime());
-                            }
 
-                        } else {
+                            userAdapter.toggleStudyTimeVisibility(isChecked);
+
+                            Iterator<User> iter = userList.iterator();
+
                             User tempUser= iter.next();
                             TextView topOneName = view.findViewById(R.id.topOneName);
                             TextView topOneTomato = view.findViewById(R.id.topOneTomato);

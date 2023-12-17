@@ -69,8 +69,9 @@
                 android:layout_height="wrap_content"
                 android:text="2023년 09월 23일 최고의 토마토 마스터!"
                 android:paddingLeft="20dp"
-                android:paddingRight="23dp"
+                android:paddingRight="5dp"
                 android:fontFamily="@font/default_bold"
+                android:layout_gravity="left|end"
 
 
                 />
@@ -87,7 +88,7 @@
                 android:thumb="@drawable/switch_btn_selector"
                 android:track="@drawable/switch_background"
                 android:checked="false"
-                android:switchMinWidth="70dp"
+                android:switchMinWidth="40dp"
                 android:text=""/>
 
 
@@ -112,7 +113,7 @@
             android:gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_height="240dp">
+            android:layout_height="260dp">
 
             <LinearLayout
                 android:layout_width="0dp"

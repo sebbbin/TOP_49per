@@ -1,14 +1,12 @@
 
 <resources>
-    <style name="CustomSwitchStyle" parent="Widget.AppCompat.Switch">
-        <item name="android:switchTextAppearance">@style/CustomSwitchTextAppearance</item>
-        <!-- 여기에 track과 thumb 스타일을 정의할 수 있습니다. -->
-    </style>
 
-    <style name="CustomSwitchTextAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">30dp</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">bold</item>
+
+    <style name="CustomSwitchStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">6dp</item>
+        <item name="android:textColor">#737361</item>
+        <item name="android:fontFamily">@font/default_bold</item>
+        <item name="android:textStyle">bold</item> <!-- 또는 bold, italic 등 -->
     </style>
 
 
