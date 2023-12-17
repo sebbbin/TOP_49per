@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +48,26 @@ public class KakaologinActivity extends AppCompatActivity {
         nickName = findViewById(R.id.nickname);
         profileImage = findViewById(R.id.profile);
         KakaoSdk.init(this,"6b761aebb82413c0a8e1c6a44cb77377");
+
+        Button debugBtn = findViewById(R.id.kakaologin_for_debug_btn);
+        debugBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                // SharedPreferences.Editor 객체를 사용하여 데이터를 저장합니다.
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("userId", "3225907701");
+
+                // 변경사항을 커밋합니다.
+                editor.apply();
+
+                Intent intent = new Intent(KakaologinActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // 현재 액티비티를 종료합니다.
+            }
+        });
+
         Function2<OAuthToken, Throwable, Unit> callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {

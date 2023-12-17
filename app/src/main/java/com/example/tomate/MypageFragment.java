@@ -71,10 +71,16 @@ public class MypageFragment extends Fragment {
                 String userId = sharedPref.getString("userId", "");
                 Log.d("TAG", "UserId: " + userId);
 
+                if (userId.equals("3225907701")) {
+                    // 디버깅용이라면 회원정보 삭제 x
+                    mainActivity.logoutOrSignout();
+                    return;
+                }
+
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
                 DatabaseReference userRef = mDatabase.child(userId);
 
-                // user1 데이터 삭제
+                // user 데이터 삭제
                 userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
