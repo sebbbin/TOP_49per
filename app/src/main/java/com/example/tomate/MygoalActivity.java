@@ -33,9 +33,9 @@ public class MygoalActivity extends AppCompatActivity{
 
         NumberPicker npker = findViewById(R.id.mygoal_np);
 
-        npker.setMinValue(0);
+        npker.setMinValue(1);
         npker.setMaxValue(20);
-        npker.setValue(0);
+        npker.setValue(5);
         npker.setWrapSelectorWheel(false);
 
         Button mygoalButton = findViewById(R.id.mygoal_fin_button);
