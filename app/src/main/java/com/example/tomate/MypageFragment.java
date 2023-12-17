@@ -61,8 +61,44 @@ public class MypageFragment extends Fragment {
         getUserData();
 
         TextView signoutTv = rootView.findViewById(R.id.fragment_mypage_member_out_tv);
-
+        TextView signoutArrowTv = rootView.findViewById(R.id.fragment_mypage_member_out_arrow_tv);
         signoutTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                // "userId" 키로 저장된 값을 가져옵니다. 기본값으로 "" (빈 문자열)을 사용합니다.
+                String userId = sharedPref.getString("userId", "");
+                Log.d("TAG", "UserId: " + userId);
+
+                if (userId.equals("3225907701")) {
+                    // 디버깅용이라면 회원정보 삭제 x
+                    mainActivity.logoutOrSignout();
+                    return;
+                }
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("User");
+                DatabaseReference userRef = mDatabase.child(userId);
+
+                // user 데이터 삭제
+                userRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // 데이터 삭제 성공 시 처리
+                        System.out.println(userId + "data successfully deleted.");
+                        mainActivity.logoutOrSignout();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // 데이터 삭제 실패 시 처리
+                        System.out.println("Error deleting user data: " + e.getMessage());
+                    }
+                });
+
+            }
+        });
+        signoutArrowTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -100,8 +136,25 @@ public class MypageFragment extends Fragment {
         });
 
         TextView logoutTv = rootView.findViewById(R.id.fragment_mypage_logout_tv);
-
+        TextView logoutArrowTv = rootView.findViewById(R.id.fragment_mypage_logout_out_arrow_tv);
         logoutTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences 객체를 가져옵니다. "MyPrefs"는 SharedPreferences 파일의 이름입니다.
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                // SharedPreferences.Editor 객체를 사용하여 데이터를 수정합니다.
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                // "userId" 키에 해당하는 데이터를 제거합니다.
+                editor.remove("userId");
+
+                // 변경사항을 커밋합니다.
+                editor.apply();
+                mainActivity.logoutOrSignout();
+            }
+        });
+        logoutArrowTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // SharedPreferences 객체를 가져옵니다. "MyPrefs"는 SharedPreferences 파일의 이름입니다.
