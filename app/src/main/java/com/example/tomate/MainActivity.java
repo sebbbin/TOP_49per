@@ -55,12 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MypageFragment()).commit();
+        bottomNavigationView.setItemIconTintList(getResources().getColorStateList(R.color.deep_gray));
+        bottomNavigationView.setItemTextColor(getResources().getColorStateList(R.color.deep_gray));
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_record:getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
+                    case R.id.navigation_record:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new StudyrecordFragment(userId)).commit();
                         break;
                     case R.id.navigation_ranking:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new RankingFragment()).commit();
